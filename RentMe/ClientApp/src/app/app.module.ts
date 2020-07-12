@@ -10,22 +10,28 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { routes } from './routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot(routes)
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      NavMenuComponent,
+      HomeComponent,
+      CounterComponent,
+      FetchDataComponent,
+      LoginComponent,
+      RegisterComponent
+   ],
+   imports: [
+      BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+      HttpClientModule,
+      FormsModule,
+      RouterModule.forRoot(routes),
+      BrowserAnimationsModule,
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }
