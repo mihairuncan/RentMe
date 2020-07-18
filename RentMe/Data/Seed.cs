@@ -9,16 +9,16 @@ namespace RentMe.Data
 {
     public class Seed
     {
-        public static void SeedRoles(RoleManager<IdentityRole> roleManager)
+        public static void SeedRoles(RoleManager<Role> roleManager)
         {
             if (!roleManager.Roles.Any())
             {
-                var roles = new List<IdentityRole>
+                var roles = new List<Role>
                 {
-                    new IdentityRole{ Name="Regular" },
-                    new IdentityRole{ Name="Moderator" },
-                    new IdentityRole{ Name="Admin" },
-                    new IdentityRole{ Name="VIP" },
+                    new Role{ Name="Regular" },
+                    new Role{ Name="Moderator" },
+                    new Role{ Name="Admin" },
+                    new Role{ Name="VIP" },
                 };
 
                 foreach (var role in roles)

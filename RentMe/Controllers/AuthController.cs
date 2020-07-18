@@ -73,7 +73,7 @@ namespace RentMe.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized("Invalid username/pasword");
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, userForLogin.Password, false);
@@ -89,7 +89,7 @@ namespace RentMe.Controllers
                 });
             }
 
-            return Unauthorized();
+            return Unauthorized("Invalid username/pasword");
         }
 
         private async Task<string> GenerateJwtToken(User user)

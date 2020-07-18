@@ -42,10 +42,10 @@ namespace RentMe
                 opt.Password.RequireUppercase = false;
             });
 
-            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
             builder.AddEntityFrameworkStores<DatabaseContext>();
-            builder.AddRoleValidator<RoleValidator<IdentityRole>>();
-            builder.AddRoleManager<RoleManager<IdentityRole>>();
+            builder.AddRoleValidator<RoleValidator<Role>>();
+            builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   model: any = {};
 
   constructor(
-    private notificationService:NotifyService,
+    private notificationService: NotifyService,
     private authService: AuthenticationService,
     private router: Router
   ) { }
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.model).subscribe(next => {
       this.notificationService.success('Successfully Logged In', '');
-    }, error => {
-      this.notificationService.error('Error', error);
+    }, _ => {
+      this.notificationService.error('Error', 'Invalid username/password');
     }, () => {
       this.router.navigate(['']);
     });

@@ -748,7 +748,7 @@
           </div>
           <input type="password" [ngClass]="{'is-invalid': registerForm.get('password').errors 
             && registerForm.get('password').touched}" class="form-control" formControlName="password"
-            placeholder="Password" class="form-control bg-white border-md">
+            placeholder="Password" class="form-control bg-white border-md" autocomplete="on">
           <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required') 
                 && registerForm.get('password').touched">
             Password is required
@@ -773,7 +773,7 @@
           </div>
           <input type="password" [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
             && registerForm.get('confirmPassword').touched}" class="form-control" formControlName="confirmPassword"
-            placeholder="Confirm Password" class="form-control bg-white border-md">
+            placeholder="Confirm Password" class="form-control bg-white border-md" autocomplete="on">
           <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('required') 
           && registerForm.get('confirmPassword').touched">
             Password is required

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace RentMe.Models
 {
@@ -18,5 +20,7 @@ namespace RentMe.Models
             Created = DateTime.Now;
             LastActive = DateTime.Now;
         }
+
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

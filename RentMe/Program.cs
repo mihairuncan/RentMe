@@ -26,7 +26,7 @@ namespace RentMe
                 {
                     var context = services.GetRequiredService<DatabaseContext>();
                     var userManager = services.GetRequiredService<UserManager<User>>();
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var roleManager = services.GetRequiredService<RoleManager<Role>>();
                     context.Database.Migrate();
                     Seed.SeedRoles(roleManager);
                 }

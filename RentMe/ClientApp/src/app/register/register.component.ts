@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../_services/auth.service';
-import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { User } from '../_models/user';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { NotifyService } from '../_services/notify.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private notificationService: NotificationsService,
+    private notificationService: NotifyService,
     private router: Router
   ) { }
 
@@ -63,12 +63,5 @@ export class RegisterComponent implements OnInit {
         });
       });
     }
-  }
-
-  go() {
-    console.log(this.registerForm.value);
-    console.log(this.registerForm.valid);
-    console.log(this.bsConfig);
-
   }
 }
