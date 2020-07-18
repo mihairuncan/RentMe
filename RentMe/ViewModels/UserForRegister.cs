@@ -17,10 +17,9 @@ namespace RentMe.ViewModels
         public string Username { get; set; }
         [Required]
         [Phone]
-        [StringLength(13, MinimumLength = 9, ErrorMessage = "Invalid phone number")]
         public string PhoneNumber { get; set; }
         [Required]
-        [StringLength(8, MinimumLength = 4, ErrorMessage = "You must specify passsword between 4 and 8 characters")]
+        [StringLength(16, MinimumLength = 4, ErrorMessage = "You must specify passsword between 4 and 8 characters")]
         public string Password { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }

@@ -1,8 +1,9 @@
 <div class="row py-5 mt-4 align-items-center">
     <!-- For Demo Purpose -->
     <div class="col-md-5 pr-lg-5 mb-5 mb-md-0 text-center">
-        <svg class="animated d-none d-md-block" id="freepik_stories-mobile-login" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
-            version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs">
+        <svg class="animated d-none d-md-block" id="freepik_stories-mobile-login" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 500 500" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:svgjs="http://svgjs.com/svgjs">
             <style>
                 svg#freepik_stories-mobile-login:not(.animated) .animable {
                     opacity: 0;
@@ -577,9 +578,11 @@
 
     <!-- Registeration Form -->
     <div class="col-md-7 col-lg-6 ml-auto">
-        <form action="#">
+        <form #loginForm="ngForm" (ngSubmit)="login()">
             <div class="row">
 
+
+                
                 <!-- Username -->
                 <div class="input-group col-lg-12 mb-4">
                     <div class="input-group-prepend">
@@ -587,8 +590,9 @@
                             <i class="fa fa-user text-muted"></i>
                         </span>
                     </div>
-                    <input id="username" type="text" name="username" placeholder="Username"
-                        class="form-control bg-white border-left-0 border-md">
+                    <input type="text" name="username" placeholder="Username" autocomplete="off"
+                        class="form-control bg-white border-left-0 border-md" required 
+                        [(ngModel)]="model.username">
                 </div>
 
                 <!-- Password -->
@@ -598,16 +602,17 @@
                             <i class="fa fa-lock text-muted"></i>
                         </span>
                     </div>
-                    <input id="password" type="password" name="password" placeholder="Password"
-                        class="form-control bg-white border-left-0 border-md">
+                    <input type="password" name="password" placeholder="Password" autocomplete="off"
+                        class="form-control bg-white border-left-0 border-md" required
+                        [(ngModel)]="model.password">
                 </div>
 
 
                 <!-- Submit Button -->
                 <div class="form-group col-lg-12 mx-auto mb-0">
-                    <a href="#" class="btn btn-sm btn-primary btn-block py-2">
+                    <button [disabled]="!loginForm.valid" class="btn btn-sm btn-primary btn-block py-2 text-white" type="submit">
                         <span class="font-weight-bold">Login</span>
-                    </a>
+                    </button>
                 </div>
 
                 <!-- Divider Text -->

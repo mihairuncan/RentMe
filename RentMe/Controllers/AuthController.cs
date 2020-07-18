@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +41,13 @@ namespace RentMe.Controllers
             {
                 return BadRequest("You should have at least 16 years old!");
             }
+
+            var user = await _userManager.FindByNameAsync(userForRegister.Username);
+            if (user != null)
+            {
+                return BadRequest("Username already taken");
+            };
+
 
             var userToCreate = _mapper.Map<User>(userForRegister);
             userToCreate.Created = DateTime.Now;

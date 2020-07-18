@@ -1,3 +1,7 @@
-input, select {
+input, select, span {
     box-shadow: none;
+}
+
+span.is-invalid {
+    background-image: none;
 }
