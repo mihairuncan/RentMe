@@ -14,6 +14,12 @@ namespace RentMe.Helpers
         {
             CreateMap<UserForRegister, User>();
             CreateMap<User, UserProfileDetails>();
+            CreateMap<User, UserWithRoles>()
+                .ForMember(
+                    dest => dest.Roles,
+                    opt => opt.MapFrom(src => src.UserRoles.Select(ur=>ur.Role.Name).ToArray<string>())
+                );
+
 
         }
     }

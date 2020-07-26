@@ -4,6 +4,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from '../roles-modal/roles-modal.component';
 import { NotifyService } from 'src/app/_services/notify.service';
 import { AdminService } from 'src/app/_services/admin.service';
+import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
+import { AuthenticationService } from 'src/app/_services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-management',
@@ -12,24 +15,38 @@ import { AdminService } from 'src/app/_services/admin.service';
 })
 export class UserManagementComponent implements OnInit {
   users: User[];
+  pagination: Pagination;
+  numberOfPages = 3;
+  searchUserInput: string;
   bsModalRef: BsModalRef;
 
   constructor(
     private modalService: BsModalService,
     private notifyService: NotifyService,
     private adminService: AdminService,
+    private authService: AuthenticationService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.getUsersWithRoles();
+    this.route.data.subscribe(data => {
+      this.users = data['users'].result;
+      this.pagination = data['users'].pagination;
+    });
   }
 
-  getUsersWithRoles() {
-    this.adminService.getUsersWithRoles().subscribe((users: User[]) => {
-      this.users = users;
-    }, error => {
-      this.notifyService.error(error);
-    });
+  loadUsersWithRoles() {
+    this.adminService.getUsersWithRoles(
+      this.pagination.currentPage,
+      this.pagination.itemsPerPage,
+      this.searchUserInput
+    )
+      .subscribe((res: PaginatedResult<User[]>) => {
+        this.users = res.result;
+        this.pagination = res.pagination;
+      }, error => {
+        this.notifyService.error(error);
+      });
   }
 
   editRolesModal(user: User) {
@@ -79,5 +96,15 @@ export class UserManagementComponent implements OnInit {
       }
     }
     return roles;
+  }
+
+
+  pageChange(pageNumber: number): void {
+    this.pagination.currentPage = pageNumber;
+    this.loadUsersWithRoles();
+  }
+
+  searchUser() {
+    this.loadUsersWithRoles();
   }
 }

@@ -5,3 +5,23 @@ input, select, span {
 span.is-invalid {
     background-image: none;
 }
+
+svg#freepik_stories-queue:not(.animated) .animable {
+    opacity: 0;
+}
+
+svg#freepik_stories-queue.animated #freepik--Shadows--inject-29 {
+    animation: 1s 1 forwards cubic-bezier(.36, -0.01, .5, 1.38) zoomIn;
+    animation-delay: 0s;
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

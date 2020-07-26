@@ -8,7 +8,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
-
+import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -25,6 +25,13 @@ import { AdminService } from './_services/admin.service';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { HomeComponent } from './home/home.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './_guards/auth.guard';
+import { UsersResolver } from './_resolvers/users.resolver';
+
+export function tokenGetter() {
+   return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -54,13 +61,24 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       BsDatepickerModule.forRoot(),
       TabsModule.forRoot(),
       ModalModule.forRoot(),
+      JwtModule.forRoot({
+         config: {
+            tokenGetter,
+            allowedDomains: ['localhost:5000'],
+            disallowedRoutes: ['localhost:5000/api/auth']
+         },
+      }),
+      NgbPaginationModule,
+      NgbAlertModule
    ],
    providers: [
       AuthenticationService,
       ErrorInterceptorProvider,
       NotifyService,
       AdminService,
-      DatePipe
+      DatePipe,
+      AuthGuard,
+      UsersResolver
    ],
    entryComponents: [
       RolesModalComponent
