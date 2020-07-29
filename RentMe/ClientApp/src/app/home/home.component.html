@@ -1,3 +1,54 @@
-<p>
-  home works!
-</p>
+<div class="row">
+
+  <div class="col-lg-3 mb-3">
+
+    <h1 class="mb-4">Rent Me</h1>
+    <div class="list-group">
+      <a href="#" class="list-group-item">Real Estate</a>
+      <a href="#" class="list-group-item">Vehicles</a>
+      <a href="#" class="list-group-item">Games</a>
+      <a href="#" class="list-group-item">Clothes and accessories</a>
+      <a href="#" class="list-group-item">Other</a>
+    </div>
+
+  </div>
+  <!-- /.col-lg-3 -->
+
+  <div class="col-lg-9">
+
+    <carousel [pauseOnFocus]="true" class="d-none d-sm-block">
+      <slide>
+        <img src="assets/images/nature/1.jpg" alt="First slide" style="display: block; height: 300px; width: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div>
+      </slide>
+      <slide>
+        <img src="assets/images/nature/2.jpg" alt="Second slide" style="display: block; height: 300px; width: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </slide>
+      <slide>
+        <img src="assets/images/nature/3.jpg" alt="Third slide" style="display: block; height: 300px; width: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Third slide label</h3>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </slide>
+    </carousel>
+
+    <div class="row mt-4">
+      <app-subcategory-card class="col-lg-4 col-md-6 mb-4" [linkText]="apartments"></app-subcategory-card>
+      <app-subcategory-card class="col-lg-4 col-md-6 mb-4" [linkText]="houses"></app-subcategory-card>
+      <app-subcategory-card class="col-lg-4 col-md-6 mb-4" [linkText]="comercial"></app-subcategory-card>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.col-lg-9 -->
+
+</div>
+<!-- /.row -->

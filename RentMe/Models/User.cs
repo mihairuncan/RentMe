@@ -7,6 +7,12 @@ namespace RentMe.Models
 {
     public class User : IdentityUser
     {
+        public User()
+        {
+            Created = DateTime.Now;
+            LastActive = DateTime.Now;
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -14,13 +20,8 @@ namespace RentMe.Models
         public string Country { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
-
-        public User()
-        {
-            Created = DateTime.Now;
-            LastActive = DateTime.Now;
-        }
-
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Announcement> Announcements { get; set; }
+
     }
 }

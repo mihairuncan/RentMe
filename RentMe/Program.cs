@@ -24,11 +24,11 @@ namespace RentMe
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DatabaseContext>();
-                    var userManager = services.GetRequiredService<UserManager<User>>();
                     var roleManager = services.GetRequiredService<RoleManager<Role>>();
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    var context = services.GetRequiredService<DatabaseContext>();
                     context.Database.Migrate();
-                    Seed.SeedRoles(roleManager);
+                    Seed.SeedData(roleManager, userManager, context);
                 }
                 catch (Exception ex)
                 {

@@ -9,6 +9,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -28,6 +30,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './_guards/auth.guard';
 import { UsersResolver } from './_resolvers/users.resolver';
+import { FooterComponent } from './footer/footer.component';
+import { SubcategoryCardComponent } from './home/subcategory-card/subcategory-card.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -43,7 +47,9 @@ export function tokenGetter() {
       RolesModalComponent,
       HasRoleDirective,
       AdminPanelComponent,
-      HomeComponent
+      HomeComponent,
+      FooterComponent,
+      SubcategoryCardComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -69,7 +75,8 @@ export function tokenGetter() {
          },
       }),
       NgbPaginationModule,
-      NgbAlertModule
+      NgbAlertModule,
+      CarouselModule.forRoot()
    ],
    providers: [
       AuthenticationService,
