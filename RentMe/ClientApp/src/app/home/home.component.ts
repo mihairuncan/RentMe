@@ -11,12 +11,15 @@ import { CarouselConfig } from 'ngx-bootstrap/carousel';
   ]
 })
 export class HomeComponent implements OnInit {
-  apartments = 'Apartments';
-  houses = 'Houses';
-  comercial = 'Comercial';
+  category = 'clothes';
   constructor() { }
 
   ngOnInit() {
+  }
+
+  changeCategory(category: string) {
+    this.category = category;
+    console.log(this.category);
   }
 
 }

@@ -1,8 +1,10 @@
-<div class="card h-100">
-  <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-  <div class="card-body">
-    <h4 class="card-title text-center">
-      <a href="#">{{linkText}}</a>
-    </h4>
+<a [routerLink]="['/announcements/', subcategoryName]">
+  <div class="card h-100">
+    <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+    <div class="card-body">
+      <h5 class="card-title text-center text-primary">
+        {{linkText}}
+      </h5>
+    </div>
   </div>
-</div>
+</a>

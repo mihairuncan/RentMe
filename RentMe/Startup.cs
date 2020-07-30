@@ -85,6 +85,7 @@ namespace RentMe
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAnnouncementService, AnnouncementService>();
 
 
             // In production, the Angular files will be served from this directory

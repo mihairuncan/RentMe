@@ -6,11 +6,13 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { UsersResolver } from './_resolvers/users.resolver';
+import { AnnouncementListComponent } from './announcements/announcement-list/announcement-list.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'announcements/:subcategoryName', component: AnnouncementListComponent},
     {
         path: '',
         runGuardsAndResolvers: 'always',
