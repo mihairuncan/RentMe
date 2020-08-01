@@ -1,0 +1,150 @@
+<div class="row py-5 mt-4 align-items-center">
+  <!-- For Demo Purpose -->
+  <div class="col-md-5 pr-lg-5 mb-5 mb-md-0 text-center">
+    <h1>Add new announcement</h1>
+  </div>
+
+  <!-- New Announcement Form -->
+  <div class="col-md-7 col-lg-6 ml-auto">
+    <form [formGroup]="newAnnouncementForm" (ngSubmit)="addNewAnnouncement()">
+      <div class="row">
+
+        <!-- Title -->
+        <div class="input-group col-lg-6 mb-4">
+          <div class="input-group-prepend">
+            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('title').errors 
+            && newAnnouncementForm.get('title').touched}">
+              <i class="fa fa-user text-muted"></i>
+            </span>
+          </div>
+          <input type="text" [ngClass]="{'is-invalid': newAnnouncementForm.get('title').errors 
+            && newAnnouncementForm.get('title').touched}" class="form-control" formControlName="title"
+            placeholder="Title" class="form-control bg-white border-md">
+          <div class="invalid-feedback"
+            *ngIf="newAnnouncementForm.get('title').touched && newAnnouncementForm.get('title').hasError('required')">
+            Title is required
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="input-group col-lg-6 mb-4">
+          <div class="input-group-prepend">
+            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('description').errors 
+            && newAnnouncementForm.get('description').touched}">
+              <i class="fa fa-user text-muted"></i>
+            </span>
+          </div>
+          <input type="text" [ngClass]="{'is-invalid': newAnnouncementForm.get('description').errors 
+            && newAnnouncementForm.get('description').touched}" class="form-control" formControlName="description"
+            placeholder="Description" class="form-control bg-white border-md">
+          <div class="invalid-feedback"
+            *ngIf="newAnnouncementForm.get('description').touched && newAnnouncementForm.get('description').hasError('required')">
+            Description is required
+          </div>
+        </div>
+
+        <!-- Rent Price -->
+        <div class="input-group col-lg-12 mb-4">
+          <div class="input-group-prepend">
+            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('rentPrice').errors 
+            && newAnnouncementForm.get('rentPrice').touched}">
+              <i class="fa fa-eur text-muted"></i>
+            </span>
+          </div>
+          <input type="number" min="0.000001" [ngClass]="{'is-invalid': newAnnouncementForm.get('rentPrice').errors 
+            && newAnnouncementForm.get('rentPrice').touched}" class="form-control" formControlName="rentPrice"
+            placeholder="Rent Price" class="form-control bg-white border-md text-right">
+          <select name="rentPeriod" formControlName="rentPeriod" [ngClass]="{'is-invalid': newAnnouncementForm.get('rentPeriod').errors 
+                    && newAnnouncementForm.get('rentPeriod').touched}" class="form-control" required>
+            <option value="day">per day</option>
+            <option value="week">per week</option>
+            <option value="month">per month</option>
+            <option value="year">per year</option>
+          </select>
+
+
+          <div class="invalid-feedback"
+            *ngIf="newAnnouncementForm.get('rentPrice').touched && newAnnouncementForm.get('rentPrice').hasError('required')">
+            Rent Price is required
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="input-group col-lg-12 mb-4">
+          <div class="input-group-prepend">
+            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('category').errors 
+                  && newAnnouncementForm.get('category').touched}">
+              <i class="fa fa-phone-square text-muted"></i>
+            </span>
+          </div>
+
+          <select (change)="loadSubcategories()" name="category" formControlName="category" [ngClass]="{'is-invalid': newAnnouncementForm.get('category').errors 
+            && newAnnouncementForm.get('category').touched}" class="form-control" required>
+            <option value=""> - choose category - </option>
+            <option *ngFor="let category of categories" value={{category.name}}>{{category.displayName}}</option>
+          </select>
+
+          <div class="invalid-feedback"
+            *ngIf="newAnnouncementForm.get('category').touched && newAnnouncementForm.get('category').hasError('required')">
+            Category is required
+          </div>
+        </div>
+
+
+        <!-- Subcategory -->
+        <div *ngIf="newAnnouncementForm.get('category').valid" class="input-group col-lg-12 mb-4">
+          <div class="input-group-prepend">
+            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('subcategory').errors 
+                  && newAnnouncementForm.get('subcategory').touched}">
+              <i class="fa fa-phone-square text-muted"></i>
+            </span>
+          </div>
+
+          <select name="subcategory" formControlName="subcategory" [ngClass]="{'is-invalid': newAnnouncementForm.get('subcategory').errors 
+            && newAnnouncementForm.get('subcategory').touched}" class="form-control" required>
+            <option value=""> - choose subcategory - </option>
+
+            <option *ngFor="let subcategory of subcategories" value={{subcategory.name}}>{{subcategory.displayName}}
+            </option>
+
+
+            <!-- <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Horror">Horror</option>
+            <option value="Thriller">Thriller</option> -->
+          </select>
+
+          <div class="invalid-feedback"
+            *ngIf="newAnnouncementForm.get('subcategory').touched && newAnnouncementForm.get('subcategory').hasError('required')">
+            Subcategory is required
+          </div>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <div class="form-group col-lg-12 mx-auto mb-0">
+          <button class="btn btn-primary btn-block py-2" [disabled]="!newAnnouncementForm.valid" type="submit">
+            <i class="fa fa-floppy-o mr-2"></i><span class="font-weight-bold">Save your announcement</span>
+          </button>
+        </div>
+
+        <!-- Divider Text -->
+        <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
+          <div class="border-bottom w-100 ml-5"></div>
+          <span class="px-2 small text-muted font-weight-bold text-muted"></span>
+          <div class="border-bottom w-100 mr-5"></div>
+        </div>
+
+        <!-- Already Registered -->
+        <div class="text-center w-100">
+          <p class="text-muted font-weight-bold">Already Registered?
+            <a class="text-primary ml-2" [routerLink]="['/login']">Login</a>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

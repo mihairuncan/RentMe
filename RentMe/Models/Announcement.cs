@@ -11,6 +11,7 @@ namespace RentMe.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public float RentPrice { get; set; }
+        public string RentPeriod { get; set; }
         public DateTime AddedOn { get; set; }
         public bool IsApproved { get; set; }
         public bool IsActive { get; set; }

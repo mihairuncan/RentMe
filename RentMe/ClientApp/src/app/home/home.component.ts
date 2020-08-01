@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
+import { CATEGORIES } from '../_models/announcement-categories';
+import { Subcategory } from '../_models/subcategory';
 
 
 @Component({
@@ -11,15 +13,24 @@ import { CarouselConfig } from 'ngx-bootstrap/carousel';
   ]
 })
 export class HomeComponent implements OnInit {
-  category = 'clothes';
+  categories = CATEGORIES;
+  selectedCategoryName: string;
+  subcategories: Subcategory[];
+
   constructor() { }
 
   ngOnInit() {
+    this.selectedCategoryName = this.categories[0].name;
+    this.loadSubcategories(this.selectedCategoryName);
   }
 
-  changeCategory(category: string) {
-    this.category = category;
-    console.log(this.category);
+  loadSubcategories(categoryName: string) {
+    this.subcategories = this.categories.find(c => c.name === categoryName).subcategories;
+  }
+
+  changeCategory(categoryName: string) {
+    this.selectedCategoryName = categoryName;
+    this.loadSubcategories(categoryName);
   }
 
 }

@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.bsConfig = {
-      containerClass: 'theme-red'
+      containerClass: 'theme-dark-blue'
     };
     this.createRegisterForm();
   }

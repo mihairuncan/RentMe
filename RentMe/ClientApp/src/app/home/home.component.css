@@ -20,3 +20,14 @@
     border: 1px solid rgba(0, 0, 0, 0.125);
     font-weight: bold;
 }
+
+.new-announcement{
+    font-weight: bold;
+}
+
+.new-announcement:hover {
+    background: #7ecf25 !important;
+    font-weight: bold;
+    text-decoration: none;
+    color: white !important;
+}

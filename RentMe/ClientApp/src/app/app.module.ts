@@ -34,6 +34,8 @@ import { FooterComponent } from './footer/footer.component';
 import { SubcategoryCardComponent } from './home/subcategory-card/subcategory-card.component';
 import { AnnouncementCardComponent } from './announcements/announcement-card/announcement-card.component';
 import { AnnouncementListComponent } from './announcements/announcement-list/announcement-list.component';
+import { AnnouncementNewComponent } from './announcements/announcement-new/announcement-new.component';
+import { AnnouncementService } from './_services/announcement.service';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -53,7 +55,8 @@ export function tokenGetter() {
       FooterComponent,
       SubcategoryCardComponent,
       AnnouncementCardComponent,
-      AnnouncementListComponent
+      AnnouncementListComponent,
+      AnnouncementNewComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -89,7 +92,8 @@ export function tokenGetter() {
       AdminService,
       DatePipe,
       AuthGuard,
-      UsersResolver
+      UsersResolver,
+      AnnouncementService
    ],
    entryComponents: [
       RolesModalComponent

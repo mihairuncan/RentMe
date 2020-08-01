@@ -8,7 +8,7 @@ namespace RentMe.Data
 {
     public class Seed
     {
-        public static void SeedData(RoleManager<Role> roleManager,UserManager<User> userManager, DatabaseContext context)
+        public static void SeedData(RoleManager<Role> roleManager, UserManager<User> userManager, DatabaseContext context)
         {
             if (!roleManager.Roles.Any())
             {
@@ -41,8 +41,8 @@ namespace RentMe.Data
                     Created = DateTime.Now,
                     LastActive = DateTime.Now
                 };
-               userManager.CreateAsync(user, "password").Wait();
-               userManager.AddToRoleAsync(user, "Admin").Wait();
+                userManager.CreateAsync(user, "password").Wait();
+                userManager.AddToRoleAsync(user, "Admin").Wait();
             }
 
             if (!context.Categories.Any())
@@ -91,7 +91,9 @@ namespace RentMe.Data
                             Subcategories = new List<Subcategory>
                                                 {
                                                     new Subcategory(){ Id = new Guid(), Name = "clothes-for-men"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-women"}
+                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-women"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-kids"}
+
                                                 }
                         },
                     new Category

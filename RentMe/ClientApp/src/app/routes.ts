@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { UsersResolver } from './_resolvers/users.resolver';
 import { AnnouncementListComponent } from './announcements/announcement-list/announcement-list.component';
+import { AnnouncementNewComponent } from './announcements/announcement-new/announcement-new.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -22,6 +23,9 @@ export const routes: Routes = [
                 path: 'admin', component: AdminPanelComponent,
                 resolve: { users: UsersResolver },
                 data: { roles: ['Admin'] }
+            },
+            {
+                path: 'new-announcement', component: AnnouncementNewComponent
             }
         ]
     }

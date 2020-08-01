@@ -1,26 +1,19 @@
 <div class="row">
-
   <div class="col-lg-3 mb-3">
 
     <h1 class="mb-4">Rent Me</h1>
     <div class="list-group">
-      <a (click)="changeCategory('clothes')" [ngClass]="{'active': category === 'clothes'}"
-        class="text-primary list-group-item list-group-item-action">Clothes and accessories</a>
-      <a (click)="changeCategory('games')" [ngClass]="{'active': category === 'games'}"
-        class="text-primary list-group-item list-group-item-action">Games</a>
-      <a (click)="changeCategory('real-estate')" [ngClass]="{'active': category === 'real-estate'}"
-        class="text-primary list-group-item list-group-item-action">Real Estate</a>
-      <a (click)="changeCategory('vehicles')" [ngClass]="{'active': category === 'vehicles'}"
-        class="text-primary list-group-item list-group-item-action">Vehicles</a>
-      <a (click)="changeCategory('other')" [ngClass]="{'active': category === 'other'}"
-        class="text-primary list-group-item list-group-item-action">Other</a>
+      <a *ngFor="let category of categories" (click)="changeCategory(category.name)"
+        [ngClass]="{'active': selectedCategoryName === category.name}"
+        class="text-primary list-group-item list-group-item-action">{{category.displayName}}</a>
+      <a class="list-group-item list-group-item-action bg-success text-light new-announcement text-center"
+        [routerLink]="'new-announcement'">
+        <i class="fa fa-plus mr-2"></i>Add New Announcement</a>
     </div>
-
   </div>
   <!-- /.col-lg-3 -->
 
   <div class="col-lg-9">
-
     <carousel [pauseOnFocus]="true" class="d-none d-sm-block">
       <slide>
         <img src="assets/images/nature/1.jpg" alt="First slide" style="display: block; height: 300px; width: 100%;">
@@ -44,63 +37,16 @@
         </div>
       </slide>
     </carousel>
-    <div [ngSwitch]="category">
 
-      <div class="row mt-4" *ngSwitchCase="'clothes'">
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4"
-          [linkText]="'Clothes and accessories for men'" [subcategoryName]="'clothes-for-men'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4"
-          [linkText]="'Clothes and accessories for women'" [subcategoryName]="'clothes-for-women'">
-        </app-subcategory-card>
-      </div>
-
-      <div class="row mt-4" *ngSwitchCase="'games'">
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Desktop'"
-          [subcategoryName]="'desktop'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Xbox'"
-          [subcategoryName]="'xbox'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'PlayStation'"
-          [subcategoryName]="'playStation'">
-        </app-subcategory-card>
-      </div>
-
-      <div class="row mt-4" *ngSwitchCase="'real-estate'">
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Apartments'"
-          [subcategoryName]="'apartments'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Houses'"
-          [subcategoryName]="'houses'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Comercial'"
-          [subcategoryName]="'comercial'">
-        </app-subcategory-card>
-      </div>
-
-      <div class="row mt-4" *ngSwitchCase="'vehicles'">
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Cars'"
-          [subcategoryName]="'cars'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Caravans'"
-          [subcategoryName]="'caravans'">
-        </app-subcategory-card>
-      </div>
-
-      <div class="row mt-4" *ngSwitchCase="'other'">
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Books'"
-          [subcategoryName]="'books'">
-        </app-subcategory-card>
-        <app-subcategory-card class="subcategory-card col-lg-4 col-md-6 mb-4" [linkText]="'Board Games'"
-          [subcategoryName]="'board-games'">
+    <div>
+      <div class="row mt-4">
+        <app-subcategory-card *ngFor="let subcategory of subcategories" class="subcategory-card col-lg-4 col-md-6 mb-4"
+          [linkText]="subcategory.displayName" [subcategoryName]="subcategory.name">
         </app-subcategory-card>
       </div>
     </div>
     <!-- /.row -->
-
   </div>
   <!-- /.col-lg-9 -->
-
 </div>
 <!-- /.row -->
