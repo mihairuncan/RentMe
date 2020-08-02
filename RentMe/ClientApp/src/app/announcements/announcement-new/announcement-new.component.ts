@@ -6,6 +6,7 @@ import { Announcement } from 'src/app/_models/announcement';
 import { AnnouncementService } from 'src/app/_services/announcement.service';
 import { CATEGORIES } from 'src/app/_models/announcement-categories';
 import { Subcategory } from 'src/app/_models/subcategory';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-announcement-new',
@@ -17,6 +18,17 @@ export class AnnouncementNewComponent implements OnInit {
   announcement: Announcement;
   categories = CATEGORIES;
   subcategories: Subcategory[];
+
+  // ---photo upload
+
+  uploader: FileUploader;
+  hasBaseDropZoneOver = false;
+
+  fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  /// --photo upload
 
 
   constructor(
@@ -37,26 +49,23 @@ export class AnnouncementNewComponent implements OnInit {
       rentPrice: ['', Validators.required],
       rentPeriod: ['day', Validators.required],
       category: ['', Validators.required],
-      subcategory: ['', Validators.required]
+      subcategoryName: ['', Validators.required]
     });
   }
 
   addNewAnnouncement() {
-    // if (this.newAnnouncementForm.valid) {
-    //   this.announcement = Object.assign({}, this.newAnnouncementForm.value);
-    //   this.announcementService.register(this.announcement).subscribe(() => {
-    //     this.notificationService.success('Announcement successfully added');
-    //   }, error => {
-    //     this.notificationService.error(error);
-    //   }, () => {
-    //     this.announcementService.login(this.announcement).subscribe(() => {
-    //       this.router.navigate(['']);
-    //     });
-    //   });
-    // }
-
-    this.announcement = Object.assign({}, this.newAnnouncementForm.value);
-    console.log(this.announcement);
+    if (this.newAnnouncementForm.valid) {
+      this.announcement = Object.assign({}, this.newAnnouncementForm.value);
+      this.announcementService.add(this.announcement).subscribe(() => {
+        this.notificationService.success('Announcement successfully added');
+      }, error => {
+        this.notificationService.error(error);
+      }, () => {
+        // this.announcementService.login(this.announcement).subscribe(() => {
+        //   this.router.navigate(['']);
+        // });
+      });
+    }
   }
 
   loadSubcategories() {

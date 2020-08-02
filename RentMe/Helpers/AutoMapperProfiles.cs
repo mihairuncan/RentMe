@@ -20,6 +20,8 @@ namespace RentMe.Helpers
                     opt => opt.MapFrom(src => src.UserRoles.Select(ur=>ur.Role.Name).ToArray<string>())
                 );
 
+            CreateMap<AnnouncementForAdd, Announcement>();
+
 
         }
     }

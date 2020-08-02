@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 
 namespace RentMe.Services
 {
+    public interface IUserService
+    {
+        public Task<PagedList<User>> GetUsersWithRoles(UserParams userParams);
+        public Task<IEnumerable<string>> EditRoles(string userName, RolesForEdit rolesForEdit);
+    }
+
     public class UserService : IUserService
     {
         private readonly DatabaseContext _context;

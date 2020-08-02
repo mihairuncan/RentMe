@@ -7,6 +7,13 @@ namespace RentMe.Models
 {
     public class Announcement
     {
+        public Announcement()
+        {
+            AddedOn = DateTime.Now;
+            IsApproved = false;
+            IsActive = true;
+        }
+
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

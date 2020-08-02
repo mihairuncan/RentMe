@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using RentMe.Models;
+using RentMe.Services;
+using RentMe.ViewModels;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace RentMe.Controllers
 {
@@ -6,6 +12,40 @@ namespace RentMe.Controllers
     [ApiController]
     public class AnnouncementsController : ControllerBase
     {
+        private readonly IAnnouncementService _announcementService;
+        private readonly ISubcategoryService _subcategoryService;
+        private readonly IMapper _mapper;
+
+        public AnnouncementsController(
+            IAnnouncementService announcementService,
+            ISubcategoryService subcategoryService,
+            IMapper mapper)
+        {
+            _announcementService = announcementService;
+            _subcategoryService = subcategoryService;
+            _mapper = mapper;
+        }
+
+        [HttpPost("new")]
+        public async Task<IActionResult> AddAnnouncement(AnnouncementForAdd announcementForAdd)
+        {
+            var announcement = _mapper.Map<Announcement>(announcementForAdd);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var subcategoy = await _subcategoryService.GetSubcategoryByName(announcementForAdd.SubcategoryName);
+
+            if (subcategoy == null)
+            {
+                return BadRequest("Invalid subcategory");
+            }
+
+            announcement.PostedById = userId;
+            announcement.Subcategory = subcategoy;
+
+            await _announcementService.AddAnnouncement(announcement);
+
+            return Ok();
+        }
+
 
     }
 }

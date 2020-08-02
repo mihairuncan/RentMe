@@ -10,6 +10,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DatePipe } from '@angular/common';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 import { AppComponent } from './app.component';
@@ -83,7 +84,8 @@ export function tokenGetter() {
       }),
       NgbPaginationModule,
       NgbAlertModule,
-      CarouselModule.forRoot()
+      CarouselModule.forRoot(),
+      FileUploadModule
    ],
    providers: [
       AuthenticationService,

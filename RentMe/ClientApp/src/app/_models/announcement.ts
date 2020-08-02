@@ -8,6 +8,6 @@ export interface Announcement {
     rentPeriod: string;
     addedOn: string;
     postedBy: string;
-    subcategory: string;
+    subcategoryName: string;
     photos?: Photo[];
 }

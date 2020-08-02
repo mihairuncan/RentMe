@@ -1,11 +1,7 @@
 <div class="row py-5 mt-4 align-items-center">
   <!-- For Demo Purpose -->
-  <div class="col-md-5 pr-lg-5 mb-5 mb-md-0 text-center">
+  <div class="col-md-6 pr-lg-5 mb-5 mb-md-0 text-center">
     <h1>Add new announcement</h1>
-  </div>
-
-  <!-- New Announcement Form -->
-  <div class="col-md-7 col-lg-6 ml-auto">
     <form [formGroup]="newAnnouncementForm" (ngSubmit)="addNewAnnouncement()">
       <div class="row">
 
@@ -91,38 +87,27 @@
         </div>
 
 
-        <!-- Subcategory -->
+        <!-- Subcategory Name -->
         <div *ngIf="newAnnouncementForm.get('category').valid" class="input-group col-lg-12 mb-4">
           <div class="input-group-prepend">
-            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('subcategory').errors 
-                  && newAnnouncementForm.get('subcategory').touched}">
+            <span class="form-control input-group-text bg-white px-4 border-md border-right-0" [ngClass]="{'is-invalid': newAnnouncementForm.get('subcategoryName').errors 
+                  && newAnnouncementForm.get('subcategoryName').touched}">
               <i class="fa fa-phone-square text-muted"></i>
             </span>
           </div>
 
-          <select name="subcategory" formControlName="subcategory" [ngClass]="{'is-invalid': newAnnouncementForm.get('subcategory').errors 
-            && newAnnouncementForm.get('subcategory').touched}" class="form-control" required>
+          <select name="subcategoryName" formControlName="subcategoryName" [ngClass]="{'is-invalid': newAnnouncementForm.get('subcategoryName').errors 
+            && newAnnouncementForm.get('subcategoryName').touched}" class="form-control" required>
             <option value=""> - choose subcategory - </option>
-
             <option *ngFor="let subcategory of subcategories" value={{subcategory.name}}>{{subcategory.displayName}}
             </option>
-
-
-            <!-- <option value="Action">Action</option>
-            <option value="Adventure">Adventure</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Drama">Drama</option>
-            <option value="Horror">Horror</option>
-            <option value="Thriller">Thriller</option> -->
           </select>
 
           <div class="invalid-feedback"
-            *ngIf="newAnnouncementForm.get('subcategory').touched && newAnnouncementForm.get('subcategory').hasError('required')">
+            *ngIf="newAnnouncementForm.get('subcategoryName').touched && newAnnouncementForm.get('subcategoryName').hasError('required')">
             Subcategory is required
           </div>
         </div>
-
-
 
         <!-- Submit Button -->
         <div class="form-group col-lg-12 mx-auto mb-0">
@@ -146,5 +131,68 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <!-- New Announcement Form -->
+  <div class="col-md-6 col-lg-6 ml-auto">
+    <div class="col-md-3">
+
+        <h3>Add photos</h3>
+
+        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+            [uploader]="uploader" class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+            <i class="fa fa-upload fa-3x"></i>
+            Drop Photos Here
+        </div>
+
+        Multiple
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+
+        Single
+        <input type="file" ng2FileSelect [uploader]="uploader" />
+    </div>
+
+    <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+
+        <h3>Upload queue</h3>
+        <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th>Size</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <div>
+                Queue progress:
+                <div class="progress mb-4">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="fa fa-upload"></span> Upload
+            </button>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                [disabled]="!uploader.isUploading">
+                <span class="fa fa-ban"></span> Cancel
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+                [disabled]="!uploader.queue.length">
+                <span class="fa fa-trash"></span> Remove
+            </button>
+        </div>
+    </div>
   </div>
 </div>

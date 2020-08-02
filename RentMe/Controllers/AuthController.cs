@@ -39,6 +39,7 @@ namespace RentMe.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegister userForRegister)
         {
+            userForRegister.DateOfBirth = userForRegister.DateOfBirth.AddHours(3);
             if (userForRegister.DateOfBirth.CalculateAge() < 16)
             {
                 return BadRequest("You should have at least 16 years old!");
