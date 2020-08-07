@@ -17,10 +17,18 @@ namespace RentMe.Helpers
             CreateMap<User, UserWithRoles>()
                 .ForMember(
                     dest => dest.Roles,
-                    opt => opt.MapFrom(src => src.UserRoles.Select(ur=>ur.Role.Name).ToArray<string>())
+                    opt => opt.MapFrom(src => src.UserRoles.Select(ur => ur.Role.Name).ToArray<string>())
                 );
 
+            CreateMap<Photo, PhotoForDetailed>();
+            CreateMap<PhotoForCreation, Photo>();
+            CreateMap<Photo, PhotoForReturn>();
             CreateMap<AnnouncementForAdd, Announcement>();
+            CreateMap<Announcement, AnnouncementWithDetails>()
+                .ForMember(
+                    dest => dest.PostedByName,
+                    opt => opt.MapFrom(src => src.PostedBy.UserName)
+                );
 
 
         }

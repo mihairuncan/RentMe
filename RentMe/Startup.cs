@@ -87,6 +87,8 @@ namespace RentMe
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<ISubcategoryService, SubcategoryService>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
 
 
             // In production, the Angular files will be served from this directory

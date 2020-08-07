@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RentMe.Models;
 using RentMe.Services;
 using RentMe.ViewModels;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -43,7 +44,22 @@ namespace RentMe.Controllers
 
             await _announcementService.AddAnnouncement(announcement);
 
-            return Ok();
+            return Ok(new { announcementId = announcement.Id });
+        }
+
+        [HttpGet("{id}", Name = "GetAnnouncement")]
+        public async Task<IActionResult> GetAnnouncement(Guid id)
+        {
+            var announcement = await _announcementService.GetAnnouncementById(id);
+
+            if(announcement == null)
+            {
+                return BadRequest("Invalid Request");
+            }
+
+            var announcementToReturn = _mapper.Map<AnnouncementWithDetails>(announcement);
+
+            return Ok(announcementToReturn);
         }
 
 
