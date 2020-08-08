@@ -122,11 +122,8 @@ namespace RentMe
                 });
             }
 
-
-
             app.UseHttpsRedirection();
             app.UseSpaStaticFiles();
-
 
             app.UseRouting();
 

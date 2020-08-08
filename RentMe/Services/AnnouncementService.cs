@@ -8,6 +8,8 @@ using RentMe.Helpers;
 using RentMe.Models;
 using RentMe.ViewModels;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,6 +22,8 @@ namespace RentMe.Services
         public Task<Announcement> GetAnnouncementById(Guid id);
         public Task<PhotoForReturn> AddPhotoForAnnouncement(Announcement announcement, PhotoForCreation photoForCreation);
         public Task<Photo> GetPhoto(Guid id);
+        public Task<IEnumerable<Photo>> GetAnnouncementPhotos(Guid announcementId);
+        public Task SetMainPhoto(Guid announcementId, Guid photoId);
     }
 
     public class AnnouncementService : IAnnouncementService
@@ -53,8 +57,6 @@ namespace RentMe.Services
 
         public async Task<PhotoForReturn> AddPhotoForAnnouncement(Announcement announcement, PhotoForCreation photoForCreation)
         {
-
-
             var file = photoForCreation.File;
 
             var uploadResult = new ImageUploadResult();
@@ -105,6 +107,20 @@ namespace RentMe.Services
             var photo = await _context.Photos
                             .FirstOrDefaultAsync(p => p.Id == id);
             return photo;
+        }
+
+        public async Task<IEnumerable<Photo>> GetAnnouncementPhotos(Guid announcementId)
+        {
+            var photos = await _context.Photos
+                                        .Where(p => p.AnnouncementId == announcementId)
+                                        .ToListAsync();
+
+            return photos;
+        }
+
+        public async Task SetMainPhoto(Guid announcementId, Guid photoId)
+        {
+            
         }
     }
 }

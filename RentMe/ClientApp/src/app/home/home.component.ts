@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
 import { CATEGORIES } from '../_models/announcement-categories';
 import { Subcategory } from '../_models/subcategory';
+import { AuthenticationService } from '../_services/auth.service';
 
 
 @Component({
@@ -16,12 +17,16 @@ export class HomeComponent implements OnInit {
   categories = CATEGORIES;
   selectedCategoryName: string;
   subcategories: Subcategory[];
+  loggedIn: boolean;
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService,
+  ) { }
 
   ngOnInit() {
     this.selectedCategoryName = this.categories[0].name;
     this.loadSubcategories(this.selectedCategoryName);
+    this.loggedIn = this.authService.loggedIn();
   }
 
   loadSubcategories(categoryName: string) {

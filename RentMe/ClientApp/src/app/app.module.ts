@@ -37,6 +37,7 @@ import { AnnouncementCardComponent } from './announcements/announcement-card/ann
 import { AnnouncementListComponent } from './announcements/announcement-list/announcement-list.component';
 import { AnnouncementNewComponent } from './announcements/announcement-new/announcement-new.component';
 import { AnnouncementService } from './_services/announcement.service';
+import { PhotoEditorComponent } from './announcements/photo-editor/photo-editor.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -57,7 +58,8 @@ export function tokenGetter() {
       SubcategoryCardComponent,
       AnnouncementCardComponent,
       AnnouncementListComponent,
-      AnnouncementNewComponent
+      AnnouncementNewComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

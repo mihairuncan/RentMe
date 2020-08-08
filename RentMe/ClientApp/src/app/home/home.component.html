@@ -6,7 +6,7 @@
       <a *ngFor="let category of categories" (click)="changeCategory(category.name)"
         [ngClass]="{'active': selectedCategoryName === category.name}"
         class="text-primary list-group-item list-group-item-action">{{category.displayName}}</a>
-      <a class="list-group-item list-group-item-action bg-success text-light new-announcement text-center"
+      <a *ngIf="loggedIn" class="list-group-item list-group-item-action bg-success text-light new-announcement text-center"
         [routerLink]="'new-announcement'">
         <i class="fa fa-plus mr-2"></i>Add New Announcement</a>
     </div>

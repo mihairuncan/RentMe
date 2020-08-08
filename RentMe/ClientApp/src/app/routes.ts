@@ -8,12 +8,13 @@ import { AuthGuard } from './_guards/auth.guard';
 import { UsersResolver } from './_resolvers/users.resolver';
 import { AnnouncementListComponent } from './announcements/announcement-list/announcement-list.component';
 import { AnnouncementNewComponent } from './announcements/announcement-new/announcement-new.component';
+import { PhotoEditorComponent } from './announcements/photo-editor/photo-editor.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'announcements/:subcategoryName', component: AnnouncementListComponent},
+    { path: 'announcements/:subcategoryName', component: AnnouncementListComponent },
     {
         path: '',
         runGuardsAndResolvers: 'always',
@@ -26,7 +27,11 @@ export const routes: Routes = [
             },
             {
                 path: 'new-announcement', component: AnnouncementNewComponent
+            },
+            {
+                path: 'photos/:announcementId', component: PhotoEditorComponent
             }
         ]
-    }
+    },
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

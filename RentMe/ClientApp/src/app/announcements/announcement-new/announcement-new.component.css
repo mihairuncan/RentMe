@@ -6,6 +6,20 @@ span.is-invalid, select.is-invalid {
     border: dotted 3px red;
 }
 
-input[type=file]{
+input[type=file] {
     color: transparent;
+}
+
+textarea {
+    height: 150px;
+}
+
+.icon {
+    width: 60px;
+}
+
+.description-icon {
+    position: absolute;
+    top: 13px;
+    left: 38px;
 }

@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Announcement } from '../_models/announcement';
+import { Photo } from '../_models/photo';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,9 @@ export class AnnouncementService {
 
   add(announcement: Announcement) {
     return this.http.post(this.baseUrl + 'api/announcements/new', announcement);
+  }
+
+  getPhotos(announcementId: string) {
+    return this.http.get<Photo[]>(this.baseUrl + 'api/announcements/' + announcementId + '/photos');
   }
 }

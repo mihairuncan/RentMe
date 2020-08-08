@@ -8,6 +8,8 @@ using RentMe.Models;
 using RentMe.Services;
 using RentMe.ViewModels;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -71,47 +73,72 @@ namespace RentMe.Controllers
             return BadRequest("Could not add the photo");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AddPhotos(Guid announcementId)
+        {
+            var announcementFromRepo = await _announcementService.GetAnnouncementById(announcementId);
 
-        //[HttpPost("{id}/setMain")]
-        //public async Task<IActionResult> SetMainPhoto(int userId, int id)
-        //{
-        //    if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-        //    {
-        //        return Unauthorized();
-        //    }
+            if (announcementFromRepo == null)
+            {
+                return BadRequest("Invalid Request");
+            }
 
-        //    var user = await _announcementService.GetUser(userId, true);
+            if (announcementFromRepo.PostedById != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            {
+                return Unauthorized();
+            }
 
-        //    if (!user.Photos.Any(p => p.Id == id))
-        //    {
-        //        return Unauthorized();
-        //    }
+            var photos = await _announcementService.GetAnnouncementPhotos(announcementId);
+            var photosToReturn = _mapper.Map<IEnumerable<PhotoForReturn>>(photos);
 
-        //    var photoFromRepo = await _announcementService.GetPhoto(id);
+            return Ok(photosToReturn);
+        }
 
-        //    if (photoFromRepo.IsMain)
-        //    {
-        //        return BadRequest("This is already the main photo");
-        //    }
 
-        //    var currentMainPhoto = await _announcementService.GetMainPhotoForUser(userId);
-        //    currentMainPhoto.IsMain = false;
-        //    photoFromRepo.IsMain = true;
+        [HttpPost("{id}/setMain")]
+        public async Task<IActionResult> SetMainPhoto(Guid announcementId, Guid photoId)
+        {
+            var announcementFromRepo = await _announcementService.GetAnnouncementById(announcementId);
 
-        //    if (await _announcementService.SaveAll())
-        //    {
-        //        return NoContent();
-        //    }
+            if (announcementFromRepo == null)
+            {
+                return BadRequest("Invalid Request");
+            }
 
-        //    return BadRequest("Could not set photo to main");
-        //}
+            if (announcementFromRepo.PostedById != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            {
+                return Unauthorized();
+            }
 
-        ///// <summary>
-        ///// Deletes a photo, request must be made by a logged in user.
-        ///// </summary>
-        ///// <param name="userId">The id of the user</param>
-        ///// <param name="id">The id of the photo</param>
-        ///// <returns></returns>
+            await _announcementService.SetMainPhoto(announcementId, photoId);
+
+            var user = await _announcementService.GetUser(userId, true);
+
+            if (!user.Photos.Any(p => p.Id == id))
+            {
+                return Unauthorized();
+            }
+
+            var photoFromRepo = await _announcementService.GetPhoto(id);
+
+            if (photoFromRepo.IsMain)
+            {
+                return BadRequest("This is already the main photo");
+            }
+
+            var currentMainPhoto = await _announcementService.GetMainPhotoForUser(userId);
+            currentMainPhoto.IsMain = false;
+            photoFromRepo.IsMain = true;
+
+            if (await _announcementService.SaveAll())
+            {
+                return NoContent();
+            }
+
+            return BadRequest("Could not set photo to main");
+        }
+
+
         //[HttpDelete("{id}")]
         //public async Task<IActionResult> DeletePhoto(int userId, int id)
         //{
