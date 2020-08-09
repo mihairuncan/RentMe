@@ -4,6 +4,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { ActivatedRoute } from '@angular/router';
 import { AnnouncementService } from 'src/app/_services/announcement.service';
 import { NotifyService } from 'src/app/_services/notify.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-photo-editor',
@@ -16,9 +17,6 @@ export class PhotoEditorComponent implements OnInit {
   baseUrl: string;
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
-
-  // currentMain: Photo;
-
 
   constructor(
     @Inject('BASE_URL') baseUrl: string,
@@ -67,31 +65,58 @@ export class PhotoEditorComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
-        // if (photo.isMain) {
-        //   this.authService.changeMemberPhoto(photo.url);
-        //   this.authService.currentUser.photoUrl = photo.url;
-        //   localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
-        // }
       }
     };
   }
 
   setMainPhoto(photo: Photo) {
-    //   this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id).subscribe(() => {
-    //     this.currentMain = this.photos.filter(p => p.isMain === true)[0];
-    //     this.currentMain.isMain = false;
-    //     photo.isMain = true;
-    //     this.authService.changeMemberPhoto(photo.url);
-    //     this.authService.currentUser.photoUrl = photo.url;
-    //     localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
-    //   },
-    //     error => {
-    //       this.alertify.error(error);
-    //     }
-    //   );
+    this.announcementService.setMainPhoto(this.announcementId, photo.id).subscribe(() => {
+      this.photos.filter(p => p.isMain === true)[0].isMain = false;
+      photo.isMain = true;
+    }, error => {
+      this.notificationService.error(error);
+    });
   }
 
-  deletePhoto(id: number) {
+  deletePhoto(photoId: string) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this photo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.announcementService.deletePhoto(this.announcementId, photoId).subscribe(() => {
+          this.photos.splice(this.photos.findIndex(p => p.id === photoId), 1);
+          Swal.fire(
+            'Deleted!',
+            'Your photo has been deleted.',
+            'success'
+          );
+        },
+          error => {
+            this.notificationService.error(error);
+          });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your photo is safe :)',
+          'error'
+        );
+      }
+    });
+
+
+
+
+
+
+
+
+
+
     //   this.alertify.confirm('Are you sure you want to delete this photo?', () => {
     //     this.userService.deletePhoto(this.authService.decodedToken.nameid, id).subscribe(() => {
     //       this.photos.splice(this.photos.findIndex(p => p.id === id), 1);

@@ -25,4 +25,12 @@ export class AnnouncementService {
   getPhotos(announcementId: string) {
     return this.http.get<Photo[]>(this.baseUrl + 'api/announcements/' + announcementId + '/photos');
   }
+
+  setMainPhoto(announcementId: string, photoId: string) {
+    return this.http.post(this.baseUrl + 'api/announcements/' + announcementId + '/photos/' + photoId + '/setMain', {});
+  }
+
+  deletePhoto(announcementId: string, photoId: string) {
+    return this.http.delete(this.baseUrl + 'api/announcements/' + announcementId + '/photos/' + photoId);
+  }
 }

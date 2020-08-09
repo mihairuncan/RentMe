@@ -23,7 +23,8 @@ namespace RentMe.Services
         public Task<PhotoForReturn> AddPhotoForAnnouncement(Announcement announcement, PhotoForCreation photoForCreation);
         public Task<Photo> GetPhoto(Guid id);
         public Task<IEnumerable<Photo>> GetAnnouncementPhotos(Guid announcementId);
-        public Task SetMainPhoto(Guid announcementId, Guid photoId);
+        public Task<bool> SetMainPhoto(Announcement announcement, Guid photoId);
+        public Task<bool> DeletePhoto(Guid photoId);
     }
 
     public class AnnouncementService : IAnnouncementService
@@ -118,9 +119,36 @@ namespace RentMe.Services
             return photos;
         }
 
-        public async Task SetMainPhoto(Guid announcementId, Guid photoId)
+        public async Task<bool> SetMainPhoto(Announcement announcement, Guid photoId)
         {
-            
+            var currentMainPhoto = announcement.Photos.FirstOrDefault(p => p.IsMain == true);
+            currentMainPhoto.IsMain = false;
+
+            var mainPhoto = announcement.Photos.FirstOrDefault(p => p.Id == photoId);
+            mainPhoto.IsMain = true;
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeletePhoto(Guid photoId)
+        {
+            var photoFromRepo = await _context.Photos.FirstOrDefaultAsync(p => p.Id == photoId);
+            var deletionParams = new DeletionParams(photoFromRepo.PublicId);
+            var result = _cloudinary.Destroy(deletionParams);
+
+            if (result.Result == "ok")
+            {
+                _context.Photos.Remove(photoFromRepo);
+            }
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

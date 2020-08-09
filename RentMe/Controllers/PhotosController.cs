@@ -95,7 +95,7 @@ namespace RentMe.Controllers
         }
 
 
-        [HttpPost("{id}/setMain")]
+        [HttpPost("{photoId}/setMain")]
         public async Task<IActionResult> SetMainPhoto(Guid announcementId, Guid photoId)
         {
             var announcementFromRepo = await _announcementService.GetAnnouncementById(announcementId);
@@ -110,78 +110,59 @@ namespace RentMe.Controllers
                 return Unauthorized();
             }
 
-            await _announcementService.SetMainPhoto(announcementId, photoId);
-
-            var user = await _announcementService.GetUser(userId, true);
-
-            if (!user.Photos.Any(p => p.Id == id))
+            if (!announcementFromRepo.Photos.Any(p => p.Id == photoId))
             {
                 return Unauthorized();
             }
 
-            var photoFromRepo = await _announcementService.GetPhoto(id);
-
-            if (photoFromRepo.IsMain)
+            if (announcementFromRepo.Photos.FirstOrDefault(p => p.IsMain).Id == photoId)
             {
                 return BadRequest("This is already the main photo");
             }
 
-            var currentMainPhoto = await _announcementService.GetMainPhotoForUser(userId);
-            currentMainPhoto.IsMain = false;
-            photoFromRepo.IsMain = true;
+            var photoChanged = await _announcementService.SetMainPhoto(announcementFromRepo, photoId);
 
-            if (await _announcementService.SaveAll())
+            if (photoChanged)
             {
                 return NoContent();
             }
-
             return BadRequest("Could not set photo to main");
         }
 
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeletePhoto(int userId, int id)
-        //{
-        //    if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-        //    {
-        //        return Unauthorized();
-        //    }
+        [HttpDelete("{photoId}")]
+        public async Task<IActionResult> DeletePhoto(Guid announcementId, Guid photoId)
+        {
+            var announcementFromRepo = await _announcementService.GetAnnouncementById(announcementId);
+            if (announcementFromRepo == null)
+            {
+                return BadRequest("Invalid Request");
+            }
 
-        //    var user = await _announcementService.GetUser(userId, true);
+            if (announcementFromRepo.PostedById != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            {
+                return Unauthorized();
+            }
 
-        //    if (!user.Photos.Any(p => p.Id == id))
-        //    {
-        //        return Unauthorized();
-        //    }
+            if (!announcementFromRepo.Photos.Any(p => p.Id == photoId))
+            {
+                return Unauthorized();
+            }
 
-        //    var photoFromRepo = await _announcementService.GetPhoto(id);
+            var photoFromRepo = await _announcementService.GetPhoto(photoId);
+            if (photoFromRepo.IsMain)
+            {
+                return BadRequest("You cannot delete your main photo");
 
-        //    if (photoFromRepo.IsMain)
-        //    {
-        //        return BadRequest("You cannot delete your main photo");
+            }
 
-        //    }
+            var photoDeleted = await _announcementService.DeletePhoto(photoId);
+            if (photoDeleted)
+            {
+                return Ok();
+            }
 
-        //    if (photoFromRepo.PublicId != null)
-        //    {
-        //        var deletionParams = new DeletionParams(photoFromRepo.PublicId);
-        //        var result = _cloudinary.Destroy(deletionParams);
-
-        //        if (result.Result == "ok")
-        //        {
-        //            _announcementService.Delete(photoFromRepo);
-        //        }
-        //    }
-        //    if (photoFromRepo.PublicId == null)
-        //    {
-        //        _announcementService.Delete(photoFromRepo);
-        //    }
-
-        //    if (await _announcementService.SaveAll())
-        //    {
-        //        return Ok();
-        //    }
-        //    return BadRequest("Failed to delete the photo");
-        //}
+            return BadRequest("Failed to delete the photo");
+        }
     }
 }

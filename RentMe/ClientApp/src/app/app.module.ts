@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FileUploadModule } from 'ng2-file-upload';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -87,7 +87,8 @@ export function tokenGetter() {
       NgbPaginationModule,
       NgbAlertModule,
       CarouselModule.forRoot(),
-      FileUploadModule
+      FileUploadModule,
+      SweetAlert2Module.forRoot()
    ],
    providers: [
       AuthenticationService,
