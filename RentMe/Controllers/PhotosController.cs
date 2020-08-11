@@ -74,7 +74,7 @@ namespace RentMe.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddPhotos(Guid announcementId)
+        public async Task<IActionResult> GetPhotos(Guid announcementId)
         {
             var announcementFromRepo = await _announcementService.GetAnnouncementById(announcementId);
 
@@ -83,10 +83,10 @@ namespace RentMe.Controllers
                 return BadRequest("Invalid Request");
             }
 
-            if (announcementFromRepo.PostedById != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-            {
-                return Unauthorized();
-            }
+            //if (announcementFromRepo.PostedById != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            //{
+            //    return Unauthorized();
+            //}
 
             var photos = await _announcementService.GetAnnouncementPhotos(announcementId);
             var photosToReturn = _mapper.Map<IEnumerable<PhotoForReturn>>(photos);

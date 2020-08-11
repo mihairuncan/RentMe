@@ -9,12 +9,17 @@ import { UsersResolver } from './_resolvers/users.resolver';
 import { AnnouncementListComponent } from './announcements/announcement-list/announcement-list.component';
 import { AnnouncementNewComponent } from './announcements/announcement-new/announcement-new.component';
 import { PhotoEditorComponent } from './announcements/photo-editor/photo-editor.component';
+import { UnapprovedAnnouncementsResolver } from './_resolvers/unapproved-announcements.resolver';
+import { AnnouncementsResolver } from './_resolvers/announcements.resolver';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'announcements/:subcategoryName', component: AnnouncementListComponent },
+    {
+        path: 'announcements/:subcategoryName', component: AnnouncementListComponent,
+        resolve: { announcements: AnnouncementsResolver }
+    },
     {
         path: '',
         runGuardsAndResolvers: 'always',
@@ -22,8 +27,8 @@ export const routes: Routes = [
         children: [
             {
                 path: 'admin', component: AdminPanelComponent,
-                resolve: { users: UsersResolver },
-                data: { roles: ['Admin'] }
+                resolve: { users: UsersResolver, announcements: UnapprovedAnnouncementsResolver },
+                data: { roles: ['Admin', 'Moderator'] }
             },
             {
                 path: 'new-announcement', component: AnnouncementNewComponent

@@ -1,7 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Announcement } from '../_models/announcement';
 import { Photo } from '../_models/photo';
+import { PaginatedResult } from '../_models/pagination';
+import { AnnouncementForList } from '../_models/announcementForList';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,7 @@ export class AnnouncementService {
 
 
   add(announcement: Announcement) {
-    return this.http.post(this.baseUrl + 'api/announcements/new', announcement);
+    return this.http.post(this.baseUrl + 'api/announcements', announcement);
   }
 
   getPhotos(announcementId: string) {
@@ -32,5 +35,27 @@ export class AnnouncementService {
 
   deletePhoto(announcementId: string, photoId: string) {
     return this.http.delete(this.baseUrl + 'api/announcements/' + announcementId + '/photos/' + photoId);
+  }
+
+  getAnnouncements(subcategoryName: string, page?, itemsPerPage?) {
+    const paginatedResult: PaginatedResult<AnnouncementForList[]> = new PaginatedResult<AnnouncementForList[]>();
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<AnnouncementForList[]>(this.baseUrl + 'api/announcements/subcategory/'
+      + subcategoryName, { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return paginatedResult;
+        })
+      );
   }
 }

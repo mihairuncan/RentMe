@@ -12,6 +12,7 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -38,6 +39,10 @@ import { AnnouncementListComponent } from './announcements/announcement-list/ann
 import { AnnouncementNewComponent } from './announcements/announcement-new/announcement-new.component';
 import { AnnouncementService } from './_services/announcement.service';
 import { PhotoEditorComponent } from './announcements/photo-editor/photo-editor.component';
+import { AnnouncementManagementComponent } from './admin/announcement-management/announcement-management.component';
+import { UnapprovedAnnouncementsResolver } from './_resolvers/unapproved-announcements.resolver';
+import { AngularMaterialModule } from './_shared/angular-material.module';
+import { AnnouncementsResolver } from './_resolvers/announcements.resolver';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -59,7 +64,8 @@ export function tokenGetter() {
       AnnouncementCardComponent,
       AnnouncementListComponent,
       AnnouncementNewComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      AnnouncementManagementComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -70,7 +76,7 @@ export function tokenGetter() {
          {
             position: ['top', 'center'],
             maxStack: 1
-         }
+         },
       ),
       ReactiveFormsModule,
       BrowserAnimationsModule,
@@ -88,7 +94,12 @@ export function tokenGetter() {
       NgbAlertModule,
       CarouselModule.forRoot(),
       FileUploadModule,
-      SweetAlert2Module.forRoot()
+      SweetAlert2Module.forRoot(),
+      BsDropdownModule.forRoot(),
+      AngularMaterialModule
+   ],
+   exports: [
+      AngularMaterialModule
    ],
    providers: [
       AuthenticationService,
@@ -98,6 +109,8 @@ export function tokenGetter() {
       DatePipe,
       AuthGuard,
       UsersResolver,
+      UnapprovedAnnouncementsResolver,
+      AnnouncementsResolver,
       AnnouncementService
    ],
    entryComponents: [

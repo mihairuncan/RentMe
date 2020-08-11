@@ -1,15 +1,10 @@
-<a (click)="goBack()" mat-button>
-  <mat-icon>keyboard_return</mat-icon>
-  <span>Back</span>
-
-</a>
 <div class="row">
 
-  <div class="mx-auto">
-    <div *ngIf="announcements?.length === 0" class="row no-announcements ">
+  <div>
+    <div *ngIf="announcements?.length === 0" class="row no-announcements">
       <div class="container">
         <div class="jumbotron shadow">
-          <h1 class="display-4 text-center">No announcements here</h1>
+          <h1 class="display-4 text-center">No announcements are waiting for approval</h1>
           <hr class="my-4">
         </div>
       </div>
@@ -18,7 +13,8 @@
 
   <div *ngIf="announcements?.length > 0" class="row mt-3 w-100">
     <app-announcement-card class="col-sm-6 col-md-4 mb-4" *ngFor="let announcement of announcements"
-      [announcement]="announcement">
+      [announcement]="announcement" (rejectAnnouncementEvent)="rejectAnnouncement($event)"
+      (approveAnnouncementEvent)="approveAnnouncement($event)">
     </app-announcement-card>
   </div>
 

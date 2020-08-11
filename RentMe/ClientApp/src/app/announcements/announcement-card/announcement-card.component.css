@@ -1,0 +1,37 @@
+.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 2px 40px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+}
+
+.announcement-card {
+    transition: transform .2s;
+}
+
+.announcement-card:hover {
+    -ms-transform: scale(1.05);
+    /* IE 9 */
+    -webkit-transform: scale(1.05);
+    /* Safari 3-8 */
+    transform: scale(1.05);
+}
+
+.approve-icons {
+    position: absolute;
+    right: 20px;
+    text-align: right;
+}
+
+img {
+    height: 170px;
+    object-fit: contain;
+    border-radius: 5px;
+    max-width: 100%;
+}
+
+mat-card-title.mat-card-title, mat-card-subtitle.mat-card-subtitle {
+    margin-bottom: 0;
+}
+
+.badge {
+    font-size: 15px;
+    font-weight: 500;
+}

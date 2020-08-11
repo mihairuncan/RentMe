@@ -1,3 +1,34 @@
-<p>
-  announcement-card works!
-</p>
+<mat-card class="announcement-card">
+  <mat-card-header>
+    <mat-card-title>{{announcement.title}}</mat-card-title>
+    <mat-card-subtitle>{{announcement.subcategoryName}}</mat-card-subtitle>
+
+    <div *ngIf="!announcement.isApproved" class="d-block d-sm-none d-lg-block">
+      <div *appHasRole="['Admin','Moderator']" class="approve-icons">
+        <a matTooltip="Approve Announcement" style="cursor: pointer;" class="text-success"
+          (click)="approveAnnouncement(announcement.id)">
+          <mat-icon>done</mat-icon>
+        </a>
+        <a matTooltip="Reject Announcement" style="cursor: pointer;" class="text-danger ml-3"
+          (click)="rejectAnnouncement(announcement.id)">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </div>
+    </div>
+
+
+  </mat-card-header>
+  <div class="text-center">
+    <img src={{announcement.mainPhotoUrl}}>
+  </div>
+  <mat-card-content>
+    <p class="d-none d-sm-block">{{announcement.description}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Details</button>
+    <button mat-button>Contact</button>
+    <!-- <p class="text-right d-inline position-absolute alert alert-success" style="right: 15px; bottom: 0;"> {{announcement.rentPrice}}€ / {{announcement.rentPeriod}}</p> -->
+    <span class="badge badge-pill badge-success position-absolute" style="right: 15px; bottom: 17px;">{{announcement.rentPrice}}€ / {{announcement.rentPeriod}}</span>
+
+  </mat-card-actions>
+</mat-card>

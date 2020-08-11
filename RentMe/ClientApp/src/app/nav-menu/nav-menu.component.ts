@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services/auth.service';
 import { NotifyService } from '../_services/notify.service';
 import { Router } from '@angular/router';
@@ -8,15 +8,16 @@ import { Router } from '@angular/router';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent {
+export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
   constructor(
     private authService: AuthenticationService,
     private notificationService: NotifyService,
     private router: Router
-  ) {
+  ) { }
 
+  ngOnInit(): void {
   }
 
   collapse() {

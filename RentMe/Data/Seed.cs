@@ -55,9 +55,9 @@ namespace RentMe.Data
                             Name = "real-estate",
                             Subcategories = new List<Subcategory>
                                                 {
-                                                    new Subcategory(){ Id = new Guid(), Name = "apartments"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "houses"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "commercial"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "apartments", DisplayName="Apartments"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "houses", DisplayName="Houses"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "commercial", DisplayName="Commercial Spaces"},
                                                 }
                         },
                     new Category
@@ -66,11 +66,11 @@ namespace RentMe.Data
                             Name = "vehicles",
                             Subcategories = new List<Subcategory>
                                                 {
-                                                    new Subcategory(){ Id = new Guid(), Name = "cars"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "caravans"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "motorcycles"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "bicycles"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "electric-scooters"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "cars", DisplayName="Cars"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "caravans", DisplayName="Caravans"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "motorcycles", DisplayName="Motorcycles"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "bicycles", DisplayName="Bicycles"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "electric-scooters", DisplayName="Electric Scooters"},
                                                 }
                         },
                      new Category
@@ -79,9 +79,9 @@ namespace RentMe.Data
                             Name = "games",
                             Subcategories = new List<Subcategory>
                                                 {
-                                                    new Subcategory(){ Id = new Guid(), Name = "desktop"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "playStation"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "xbox"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "desktop", DisplayName="Desktop Games"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "playStation", DisplayName="PlayStation Games"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "xbox", DisplayName="Xbox Games"},
                                                 }
                         },
                     new Category
@@ -90,9 +90,9 @@ namespace RentMe.Data
                             Name = "clothes-and-accessories",
                             Subcategories = new List<Subcategory>
                                                 {
-                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-men"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-women"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-kids"}
+                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-men", DisplayName="Clothes for men"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-women", DisplayName="Clothes for women"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "clothes-for-kids", DisplayName="Clothes for kids"}
 
                                                 }
                         },
@@ -102,8 +102,8 @@ namespace RentMe.Data
                             Name = "others",
                             Subcategories = new List<Subcategory>
                                                 {
-                                                    new Subcategory(){ Id = new Guid(), Name = "books"},
-                                                    new Subcategory(){ Id = new Guid(), Name = "board-games"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "books", DisplayName="Books"},
+                                                    new Subcategory(){ Id = new Guid(), Name = "board-games", DisplayName="Board Games"},
                                                 }
                         }
                 };

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RentMe.ViewModels
 {
-    public class AnnouncementWithDetails
+    public class AnnouncementForList
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -11,8 +13,8 @@ namespace RentMe.ViewModels
         public float RentPrice { get; set; }
         public string RentPeriod { get; set; }
         public DateTime AddedOn { get; set; }
-        public string PostedByName { get; set; }
-        public string PostedById { get; set; }
-        public ICollection<PhotoForDetailed> Photos { get; set; }
+        public bool IsApproved { get; set; }
+        public string SubcategoryName { get; set; }
+        public string MainPhotoUrl { get; set; }
     }
 }

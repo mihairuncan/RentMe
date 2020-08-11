@@ -7,18 +7,41 @@
         <span class="navbar-toggler-icon text-white"></span>
       </button>
       <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse" [ngClass]="{ show: isExpanded }">
-        <ul  class="navbar-nav flex-grow">
+        <ul class="navbar-nav flex-grow">
           <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-            <a *appHasRole="['Admin','Moderator']" class="nav-link text-white" [routerLink]="['/admin']">Admin</a>
+            <div class="py-1">
+              <a *appHasRole="['Admin','Moderator']" class="nav-link text-white" [routerLink]="['/admin']">
+                <i class="fa fa-id-card"></i>
+                Admin Panel</a>
+            </div>
+          </li>
+          <li>
+            <div *ngIf="loggedIn()" style="cursor: pointer; border-left: 1px solid white;"
+              class="dropdown mt-md-2 py-1 px-2 text-white ml-2" dropdown>
+              <a class="dropdown-toggle" dropdownToggle>
+                <i class="fa fa-user-circle-o"></i>
+                Welcome {{authService.decodedToken?.unique_name | titlecase}}
+              </a>
+              <div class="dropdown-menu mt-2" *dropdownMenu>
+                <a class="dropdown-item" [routerLink]="['/member/edit']">
+                  <i class="fa fa-user"></i> Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" (click)="logout()">
+                  <i class="fa fa-sign-out"></i>Logout</a>
+              </div>
+            </div>
           </li>
           <li *ngIf="!loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/register']">Register</a>
+            <a class="nav-link text-white" [routerLink]="['/register']">
+              <i class="fa fa-user-plus"></i>
+              Register
+            </a>
           </li>
           <li *ngIf="!loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/login']">Login</a>
-          </li>
-          <li *ngIf="loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" href="#" (click)="logout()">Logout</a>
+            <a class="nav-link text-white" [routerLink]="['/login']">
+              <i class="fa fa-sign-in"></i>
+              Login
+            </a>
           </li>
         </ul>
       </div>

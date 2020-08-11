@@ -30,6 +30,16 @@ namespace RentMe.Helpers
                     opt => opt.MapFrom(src => src.PostedBy.UserName)
                 );
 
+            CreateMap<Announcement, AnnouncementForList>()
+                .ForMember(
+                    dest => dest.SubcategoryName,
+                    opt => opt.MapFrom(src => src.Subcategory.DisplayName)
+                )
+                .ForMember(
+                    dest => dest.MainPhotoUrl,
+                    opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain == true).Url)
+                );
+
 
         }
     }

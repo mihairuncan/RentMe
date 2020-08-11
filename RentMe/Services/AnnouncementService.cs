@@ -25,6 +25,10 @@ namespace RentMe.Services
         public Task<IEnumerable<Photo>> GetAnnouncementPhotos(Guid announcementId);
         public Task<bool> SetMainPhoto(Announcement announcement, Guid photoId);
         public Task<bool> DeletePhoto(Guid photoId);
+        public Task<PagedList<Announcement>> GetUnapprovedAnnouncements(AnnouncementParams announcementParams);
+        public Task<bool> ApproveAnnouncement(Guid announcementId);
+        public Task<bool> DeleteAnnouncement(Guid announcementId);
+        public Task<PagedList<Announcement>> GetAnnouncementsBySubcategory(string subcategoryName, AnnouncementParams announcementParams);
     }
 
     public class AnnouncementService : IAnnouncementService
@@ -69,7 +73,7 @@ namespace RentMe.Services
                     var uploadParams = new ImageUploadParams()
                     {
                         File = new FileDescription(file.Name, stream),
-                        Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
+                        //Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
                     };
 
                     uploadResult = _cloudinary.Upload(uploadParams);
@@ -150,5 +154,82 @@ namespace RentMe.Services
             }
             return false;
         }
+        public async Task<PagedList<Announcement>> GetAnnouncementsBySubcategory(string subcategoryName, AnnouncementParams announcementParams)
+        {
+            var announcements = _context.Announcements
+                                        .Include(a => a.Photos)
+                                        .Include(a => a.Subcategory)
+                                        .Where(a=>a.Subcategory.Name == subcategoryName)
+                                        .AsQueryable();
+
+            //if (!string.IsNullOrEmpty(userParams.Username))
+            //{
+            //    users = users.Where(u => u.UserName.Contains(userParams.Username));
+            //}
+
+            announcements = announcements.OrderByDescending(a => a.AddedOn);
+
+            return await PagedList<Announcement>.CreateAsync(announcements, announcementParams.PageNumber, announcementParams.PageSize);
+        }
+
+        public async Task<PagedList<Announcement>> GetUnapprovedAnnouncements(AnnouncementParams announcementParams)
+        {
+            var announcements = _context.Announcements
+                                        .IgnoreQueryFilters()
+                                        .Include(a => a.Photos)
+                                        .Include(a=>a.Subcategory)
+                                        .Where(a => a.IsApproved == false)
+                                        .AsQueryable();
+
+            //if (!string.IsNullOrEmpty(userParams.Username))
+            //{
+            //    users = users.Where(u => u.UserName.Contains(userParams.Username));
+            //}
+
+            announcements = announcements.OrderBy(a => a.AddedOn);
+
+            return await PagedList<Announcement>.CreateAsync(announcements, announcementParams.PageNumber, announcementParams.PageSize);
+
+        }
+
+        public async Task<bool> ApproveAnnouncement(Guid announcementId)
+        {
+            var announcement = await _context.Announcements
+                                                .IgnoreQueryFilters()
+                                                .FirstOrDefaultAsync(a => a.Id == announcementId);
+            if (announcement == null)
+            {
+                return false;
+            }
+
+            announcement.IsApproved = true;
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeleteAnnouncement(Guid announcementId)
+        {
+            var announcement = await _context.Announcements
+                                              .IgnoreQueryFilters()
+                                              .FirstOrDefaultAsync(a => a.Id == announcementId && a.IsApproved == false);
+            if (announcement == null)
+            {
+                return false;
+            }
+
+            _context.Entry(announcement).State = EntityState.Deleted;
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            };
+
+            return false;
+        }
+
+
     }
 }
