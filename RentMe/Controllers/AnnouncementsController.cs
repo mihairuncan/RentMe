@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RentMe.Helpers;
 using RentMe.Models;
 using RentMe.Services;
 using RentMe.ViewModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,19 +19,16 @@ namespace RentMe.Controllers
         private readonly IAnnouncementService _announcementService;
         private readonly ISubcategoryService _subcategoryService;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
 
         public AnnouncementsController(
             IAnnouncementService announcementService,
             ISubcategoryService subcategoryService,
-            IMapper mapper,
-            UserManager<User> userManager
+            IMapper mapper
             )
         {
             _announcementService = announcementService;
             _subcategoryService = subcategoryService;
             _mapper = mapper;
-            _userManager = userManager;
         }
 
         [HttpPost]
@@ -56,7 +51,35 @@ namespace RentMe.Controllers
             return Ok(new { announcementId = announcement.Id });
         }
 
+        [HttpPut("{announcementId}")]
+        public async Task<IActionResult> UpdateAnnouncement(Guid announcementId, AnnouncementForAdd announcementForAdd)
+        {
+
+
+            var announcement = _mapper.Map<Announcement>(announcementForAdd);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var subcategoy = await _subcategoryService.GetSubcategoryByName(announcementForAdd.SubcategoryName);
+
+            if (subcategoy == null)
+            {
+                return BadRequest("Invalid subcategory");
+            }
+
+            announcement.Subcategory = subcategoy;
+            try
+            {
+                await _announcementService.UpdateAnnouncement(userId, announcementId, announcement);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return Ok(new { announcementId });
+        }
+
         [HttpGet("{id}", Name = "GetAnnouncement")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAnnouncement(Guid id)
         {
             var announcement = await _announcementService.GetAnnouncementById(id);
@@ -71,11 +94,32 @@ namespace RentMe.Controllers
             return Ok(announcementToReturn);
         }
 
+
         [HttpGet("subcategory/{subcategoryName}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAnnouncementsBySubcategory(string subcategoryName, [FromQuery] AnnouncementParams announcementParams)
         {
             var announcements = await _announcementService.GetAnnouncementsBySubcategory(subcategoryName, announcementParams);
+
+            var announcementsForReturn = _mapper.Map<IEnumerable<AnnouncementForList>>(announcements);
+
+            Response.AddPagination(announcements.CurrentPage, announcements.PageSize,
+                announcements.TotalCount, announcements.TotalPages);
+
+            return Ok(announcementsForReturn);
+        }
+
+        [HttpGet("myAnnouncements")]
+        public async Task<IActionResult> GetAnnouncementsByUserId([FromQuery] AnnouncementParams announcementParams)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var announcements = await _announcementService.GetAnnouncementsByUserId(userId, announcementParams);
 
             var announcementsForReturn = _mapper.Map<IEnumerable<AnnouncementForList>>(announcements);
 

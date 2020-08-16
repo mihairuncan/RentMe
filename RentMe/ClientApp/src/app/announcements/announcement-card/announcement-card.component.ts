@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import { AnnouncementForList } from 'src/app/_models/announcementForList';
 import { Output, EventEmitter } from '@angular/core';
 
@@ -8,7 +8,7 @@ import { Output, EventEmitter } from '@angular/core';
   templateUrl: './announcement-card.component.html',
   styleUrls: ['./announcement-card.component.css']
 })
-export class AnnouncementCardComponent implements OnInit {
+export class AnnouncementCardComponent implements OnInit, AfterContentInit {
   @Input() announcement: AnnouncementForList;
   @Output() rejectAnnouncementEvent = new EventEmitter<string>();
   @Output() approveAnnouncementEvent = new EventEmitter<string>();
@@ -16,6 +16,13 @@ export class AnnouncementCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (this.announcement.mainPhotoUrl === null) {
+      this.announcement.mainPhotoUrl = '../../assets/images/no-image.jpg';
+    }
+  }
+
+  ngAfterContentInit(): void {
+    document.querySelector('.mat-card-header-text').remove();
   }
 
   rejectAnnouncement(announcementId: string) {
@@ -25,4 +32,6 @@ export class AnnouncementCardComponent implements OnInit {
   approveAnnouncement(announcementId: string) {
     this.approveAnnouncementEvent.emit(announcementId);
   }
+
+
 }

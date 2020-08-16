@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-md-6 pr-lg-5 mb-5 mb-md-0 text-center mx-auto">
-    <h1>Add new announcement</h1>
-    <form [formGroup]="newAnnouncementForm" (ngSubmit)="addNewAnnouncement()">
+    <h1 *ngIf="!announcement">Add new announcement</h1>
+    <h1 *ngIf="announcement">Update announcement</h1>
+    <form [formGroup]="newAnnouncementForm" (ngSubmit)="upsertAnnouncement()">
       <div class="row">
 
         <!-- Title -->
@@ -110,9 +111,18 @@
 
         <!-- Submit Button -->
         <div class="form-group col-lg-12 mx-auto mb-0">
-          <button class="btn btn-primary btn-block py-2" [disabled]="!newAnnouncementForm.valid" type="submit">
+          <button *ngIf="!announcement" class="btn btn-primary btn-block py-2" [disabled]="!newAnnouncementForm.valid"
+            type="submit">
             <i class="fa fa-floppy-o mr-2"></i><span class="font-weight-bold">Save your announcement</span>
           </button>
+
+          <div *ngIf="announcement" class="text-center">
+            <button class="btn btn-primary btn-block py-2" [disabled]="!newAnnouncementForm.valid" type="submit">
+              <i class="fa fa-floppy-o mr-2"></i><span class="font-weight-bold">Update announcement</span>
+            </button>
+            <a [routerLink]="['/photos/'+announcement.id]">Edit Photos</a>
+          </div>
+
         </div>
 
         <!-- Divider Text -->

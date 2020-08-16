@@ -4,6 +4,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+
 
 
 @NgModule({
@@ -13,13 +15,15 @@ import {MatButtonModule} from '@angular/material/button';
     MatTooltipModule,
     MatIconModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ],
   exports: [
     MatTooltipModule,
     MatIconModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ]
 })
 export class AngularMaterialModule { }

@@ -34,7 +34,7 @@
             <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
           </div>
         </div>
-        <button type="button" class="btn btn-success btn-s mr-3" (click)="uploader.uploadAll()"
+        <button type="button" class="btn btn-success btn-s mr-3" (click)="uploadPhotos()"
           [disabled]="!uploader.getNotUploadedItems().length">
           <span class="fa fa-upload"></span> Save
         </button>
@@ -72,6 +72,6 @@
     </div>
   </div>
   <div class="col-12 text-center mb-3">
-    <button type="button" class="btn btn-success btn-shadow" [routerLink]="['']">Continue</button>
+    <button type="button" class="btn btn-success btn-shadow" [routerLink]="['/myAnnouncements']">My Announcements</button>
   </div>
 </div>

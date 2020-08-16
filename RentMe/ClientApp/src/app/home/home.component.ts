@@ -26,7 +26,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.selectedCategoryName = this.categories[0].name;
     this.loadSubcategories(this.selectedCategoryName);
-    this.loggedIn = this.authService.loggedIn();
+
+
+   this.authService.userIsLoggedIn.subscribe(loggedIn => this.loggedIn = loggedIn);
   }
 
   loadSubcategories(categoryName: string) {

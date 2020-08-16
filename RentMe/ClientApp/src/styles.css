@@ -35,3 +35,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
   height: 2.5rem;            /* Footer height */
 }
+
+.ngx-gallery-icon-content {
+  opacity: 0.5;
+  color: grey;
+}

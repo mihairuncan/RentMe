@@ -7,7 +7,7 @@ import { AnnouncementForList } from '../_models/announcementForList';
 import { AnnouncementService } from '../_services/announcement.service';
 
 @Injectable()
-export class AnnouncementsResolver implements Resolve<AnnouncementForList[]> {
+export class MyAnnouncementsResolver implements Resolve<AnnouncementForList[]> {
     pageNumber = 1;
     pageSize = 6;
 
@@ -18,8 +18,7 @@ export class AnnouncementsResolver implements Resolve<AnnouncementForList[]> {
     ) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<AnnouncementForList[]> {
-        return this.announcementService.getAnnouncements(route.params['subcategoryName'],
-            this.pageNumber, this.pageSize).pipe(
+        return this.announcementService.getMyAnnouncements(this.pageNumber, this.pageSize).pipe(
                 catchError(_ => {
                     this.notificationService.error('Problem retrieving announcements');
                     this.router.navigate(['/']);

@@ -11,6 +11,10 @@ import { AnnouncementNewComponent } from './announcements/announcement-new/annou
 import { PhotoEditorComponent } from './announcements/photo-editor/photo-editor.component';
 import { UnapprovedAnnouncementsResolver } from './_resolvers/unapproved-announcements.resolver';
 import { AnnouncementsResolver } from './_resolvers/announcements.resolver';
+import { AnnouncementDetailsComponent } from './announcements/announcement-details/announcement-details.component';
+import { AnnouncementResolver } from './_resolvers/announcement-details.resolver';
+import { MyAnnouncementListComponent } from './announcements/my-announcement-list/my-announcement-list.component';
+import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -19,6 +23,10 @@ export const routes: Routes = [
     {
         path: 'announcements/:subcategoryName', component: AnnouncementListComponent,
         resolve: { announcements: AnnouncementsResolver }
+    },
+    {
+        path: 'announcement/:announcementId', component: AnnouncementDetailsComponent,
+        resolve: { announcement: AnnouncementResolver }
     },
     {
         path: '',
@@ -35,7 +43,15 @@ export const routes: Routes = [
             },
             {
                 path: 'photos/:announcementId', component: PhotoEditorComponent
-            }
+            },
+            {
+                path: 'myAnnouncements', component: MyAnnouncementListComponent,
+                resolve: { announcements: MyAnnouncementsResolver }
+            },
+            {
+                path: 'edit-announcement/:announcementId', component: AnnouncementNewComponent,
+                resolve: { announcement: AnnouncementResolver }
+            },
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' },

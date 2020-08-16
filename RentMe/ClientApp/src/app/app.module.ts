@@ -13,6 +13,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgxGalleryModule } from 'ngx-gallery';
+import {TimeAgoPipe} from 'time-ago-pipe';
+
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -43,6 +46,10 @@ import { AnnouncementManagementComponent } from './admin/announcement-management
 import { UnapprovedAnnouncementsResolver } from './_resolvers/unapproved-announcements.resolver';
 import { AngularMaterialModule } from './_shared/angular-material.module';
 import { AnnouncementsResolver } from './_resolvers/announcements.resolver';
+import { AnnouncementDetailsComponent } from './announcements/announcement-details/announcement-details.component';
+import { AnnouncementResolver } from './_resolvers/announcement-details.resolver';
+import { MyAnnouncementListComponent } from './announcements/my-announcement-list/my-announcement-list.component';
+import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -65,7 +72,10 @@ export function tokenGetter() {
       AnnouncementListComponent,
       AnnouncementNewComponent,
       PhotoEditorComponent,
-      AnnouncementManagementComponent
+      AnnouncementManagementComponent,
+      AnnouncementDetailsComponent,
+      TimeAgoPipe,
+      MyAnnouncementListComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -96,7 +106,8 @@ export function tokenGetter() {
       FileUploadModule,
       SweetAlert2Module.forRoot(),
       BsDropdownModule.forRoot(),
-      AngularMaterialModule
+      AngularMaterialModule,
+      NgxGalleryModule
    ],
    exports: [
       AngularMaterialModule
@@ -111,7 +122,9 @@ export function tokenGetter() {
       UsersResolver,
       UnapprovedAnnouncementsResolver,
       AnnouncementsResolver,
-      AnnouncementService
+      AnnouncementService,
+      AnnouncementResolver,
+      MyAnnouncementsResolver
    ],
    entryComponents: [
       RolesModalComponent

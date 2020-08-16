@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../_models/user';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,8 @@ export class AuthenticationService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
+  isLoggedIn = new BehaviorSubject<boolean>(this.loggedIn());
+  userIsLoggedIn = this.isLoggedIn.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -30,6 +33,7 @@ export class AuthenticationService {
             localStorage.setItem('user', JSON.stringify(user.user));
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
             this.currentUser = user.user;
+            this.isLoggedIn.next(true);
           }
         })
       );

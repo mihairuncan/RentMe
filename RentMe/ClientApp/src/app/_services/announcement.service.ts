@@ -25,6 +25,10 @@ export class AnnouncementService {
     return this.http.post(this.baseUrl + 'api/announcements', announcement);
   }
 
+  update(announcement: Announcement) {
+    return this.http.put(this.baseUrl + 'api/announcements/' + announcement.id, announcement);
+  }
+
   getPhotos(announcementId: string) {
     return this.http.get<Photo[]>(this.baseUrl + 'api/announcements/' + announcementId + '/photos');
   }
@@ -57,5 +61,31 @@ export class AnnouncementService {
           return paginatedResult;
         })
       );
+  }
+
+  getMyAnnouncements(page?, itemsPerPage?) {
+    const paginatedResult: PaginatedResult<AnnouncementForList[]> = new PaginatedResult<AnnouncementForList[]>();
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<AnnouncementForList[]>(this.baseUrl + 'api/announcements/myAnnouncements', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return paginatedResult;
+        })
+      );
+  }
+
+
+  getAnnouncement(announcementId: string) {
+    return this.http.get<Announcement>(this.baseUrl + 'api/announcements/' + announcementId);
   }
 }

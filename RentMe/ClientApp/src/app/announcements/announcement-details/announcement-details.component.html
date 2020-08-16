@@ -1,0 +1,39 @@
+<div class="row text-center">
+  <div class="col-lg-6 text-left">
+    <h3>
+      {{announcement.title}}
+    </h3>
+    <p class="lead">
+      {{announcement.description}}
+    </p>
+
+    <div>
+      <p>
+        <span class="badge badge-pill badge-success">{{announcement.rentPrice | number:'1.2-2'}}€ /
+          {{announcement.rentPeriod}}</span>
+      </p>
+      <p>Posted by
+        <strong>{{announcement.postedByName}}</strong> on
+        <strong>
+          {{announcement.addedOn | date:'mediumDate'}}
+        </strong>
+      </p>
+    </div>
+<div *ngIf="announcement.postedById === loggedInUserId">
+  <a [routerLink]="['/edit-announcement/' + announcement.id]">Edit Announcement</a>
+</div>
+
+  </div>
+
+  <div class="col-lg-6">
+    <ngx-gallery *ngIf="galleryImages.length>0" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+    <div class="font-weight-bold text-secondary h-100" *ngIf="galleryImages.length==0">
+      <p  class="lead">
+        There are no photos for this announcement.
+      </p>
+      <div class="container display-1">
+        <i class="fa fa-frown-o" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>

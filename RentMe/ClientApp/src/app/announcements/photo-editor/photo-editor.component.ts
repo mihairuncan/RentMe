@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Photo } from 'src/app/_models/photo';
 import { FileUploader } from 'ng2-file-upload';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnnouncementService } from 'src/app/_services/announcement.service';
 import { NotifyService } from 'src/app/_services/notify.service';
 import Swal from 'sweetalert2';
+import { AuthenticationService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -21,20 +22,31 @@ export class PhotoEditorComponent implements OnInit {
   constructor(
     @Inject('BASE_URL') baseUrl: string,
     private route: ActivatedRoute,
+    private router: Router,
     private announcementService: AnnouncementService,
-    private notificationService: NotifyService
+    private notificationService: NotifyService,
+    private authService: AuthenticationService
   ) {
     this.baseUrl = baseUrl;
   }
 
   ngOnInit() {
     this.announcementId = this.route.snapshot.paramMap.get('announcementId');
-    this.initializeUploader();
-    this.announcementService.getPhotos(this.announcementId).subscribe(result => {
-      this.photos = result;
+    this.announcementService.getAnnouncement(this.announcementId).subscribe(result => {
+      if (result.postedById !== this.authService.decodedToken.nameid) {
+        this.router.navigate(['/']);
+      }
+      // console.log(result);
+      this.photos = result.photos;
     }, error => {
       this.notificationService.error(error);
     });
+    this.initializeUploader();
+    // this.announcementService.getPhotos(this.announcementId).subscribe(result => {
+    //   this.photos = result;
+    // }, error => {
+    //   this.notificationService.error(error);
+    // });
   }
 
   fileOverBase(e: any): void {
@@ -76,6 +88,15 @@ export class PhotoEditorComponent implements OnInit {
     }, error => {
       this.notificationService.error(error);
     });
+  }
+
+  uploadPhotos() {
+    this.uploader.uploadAll();
+    Swal.fire(
+      'Saved!',
+      'Your announcement is waiting for approval.',
+      'success'
+    );
   }
 
   deletePhoto(photoId: string) {

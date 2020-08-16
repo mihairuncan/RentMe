@@ -3,25 +3,21 @@ import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { NotifyService } from '../_services/notify.service';
-import { AnnouncementForList } from '../_models/announcementForList';
 import { AnnouncementService } from '../_services/announcement.service';
+import { Announcement } from '../_models/announcement';
 
 @Injectable()
-export class AnnouncementsResolver implements Resolve<AnnouncementForList[]> {
-    pageNumber = 1;
-    pageSize = 6;
-
+export class AnnouncementResolver implements Resolve<Announcement> {
     constructor(
         private announcementService: AnnouncementService,
         private router: Router,
         private notificationService: NotifyService,
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot): Observable<AnnouncementForList[]> {
-        return this.announcementService.getAnnouncements(route.params['subcategoryName'],
-            this.pageNumber, this.pageSize).pipe(
+    resolve(route: ActivatedRouteSnapshot): Observable<Announcement> {
+        return this.announcementService.getAnnouncement(route.params['announcementId']).pipe(
                 catchError(_ => {
-                    this.notificationService.error('Problem retrieving announcements');
+                    this.notificationService.error('Problem retrieving announcement\'s details');
                     this.router.navigate(['/']);
                     return of(null);
                 })

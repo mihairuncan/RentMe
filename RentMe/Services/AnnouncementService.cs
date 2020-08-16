@@ -19,6 +19,7 @@ namespace RentMe.Services
     public interface IAnnouncementService
     {
         public Task AddAnnouncement(Announcement announcement);
+        public Task UpdateAnnouncement(string userId, Guid announcementId, Announcement announcement);
         public Task<Announcement> GetAnnouncementById(Guid id);
         public Task<PhotoForReturn> AddPhotoForAnnouncement(Announcement announcement, PhotoForCreation photoForCreation);
         public Task<Photo> GetPhoto(Guid id);
@@ -29,6 +30,7 @@ namespace RentMe.Services
         public Task<bool> ApproveAnnouncement(Guid announcementId);
         public Task<bool> DeleteAnnouncement(Guid announcementId);
         public Task<PagedList<Announcement>> GetAnnouncementsBySubcategory(string subcategoryName, AnnouncementParams announcementParams);
+        public Task<PagedList<Announcement>> GetAnnouncementsByUserId(string userId, AnnouncementParams announcementParams);
     }
 
     public class AnnouncementService : IAnnouncementService
@@ -58,6 +60,29 @@ namespace RentMe.Services
         {
             await _context.Announcements.AddAsync(announcement);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAnnouncement(string userId, Guid announcementId, Announcement announcement)
+        {
+            var announcementFromRepo = await _context.Announcements.FirstOrDefaultAsync(a => a.Id == announcementId);
+            if (announcementFromRepo == null)
+            {
+                throw new Exception("Invalid Request");
+            }
+            if (announcementFromRepo.PostedById != userId)
+            {
+                throw new Exception("Invalid Request");
+            }
+
+            announcementFromRepo.Title = announcement.Title;
+            announcementFromRepo.Description = announcement.Description;
+            announcementFromRepo.RentPrice = announcement.RentPrice;
+            announcementFromRepo.RentPeriod = announcement.RentPeriod;
+            announcementFromRepo.Subcategory = announcement.Subcategory;
+            announcementFromRepo.IsApproved = false;
+
+            await _context.SaveChangesAsync();
+
         }
 
         public async Task<PhotoForReturn> AddPhotoForAnnouncement(Announcement announcement, PhotoForCreation photoForCreation)
@@ -92,6 +117,7 @@ namespace RentMe.Services
             }
 
             announcement.Photos.Add(photo);
+            announcement.IsApproved = false;
             await _context.SaveChangesAsync();
 
             var photoToReturn = _mapper.Map<PhotoForReturn>(photo);
@@ -102,6 +128,7 @@ namespace RentMe.Services
         {
             var announcementToReturn = await _context.Announcements
                                                         .IgnoreQueryFilters()
+                                                        .Include(a => a.PostedBy)
                                                         .Include(a => a.Photos)
                                                         .FirstOrDefaultAsync(a => a.Id == id);
             return announcementToReturn;
@@ -159,7 +186,7 @@ namespace RentMe.Services
             var announcements = _context.Announcements
                                         .Include(a => a.Photos)
                                         .Include(a => a.Subcategory)
-                                        .Where(a=>a.Subcategory.Name == subcategoryName)
+                                        .Where(a => a.Subcategory.Name == subcategoryName)
                                         .AsQueryable();
 
             //if (!string.IsNullOrEmpty(userParams.Username))
@@ -172,12 +199,26 @@ namespace RentMe.Services
             return await PagedList<Announcement>.CreateAsync(announcements, announcementParams.PageNumber, announcementParams.PageSize);
         }
 
+        public async Task<PagedList<Announcement>> GetAnnouncementsByUserId(string userId, AnnouncementParams announcementParams)
+        {
+            var announcements = _context.Announcements
+                                        .IgnoreQueryFilters()
+                                        .Where(a => a.PostedById == userId)
+                                        .Include(a => a.Photos)
+                                        .Include(a => a.Subcategory)
+                                        .AsQueryable();
+
+            announcements = announcements.OrderByDescending(a => a.AddedOn);
+
+            return await PagedList<Announcement>.CreateAsync(announcements, announcementParams.PageNumber, announcementParams.PageSize);
+        }
+
         public async Task<PagedList<Announcement>> GetUnapprovedAnnouncements(AnnouncementParams announcementParams)
         {
             var announcements = _context.Announcements
                                         .IgnoreQueryFilters()
                                         .Include(a => a.Photos)
-                                        .Include(a=>a.Subcategory)
+                                        .Include(a => a.Subcategory)
                                         .Where(a => a.IsApproved == false)
                                         .AsQueryable();
 

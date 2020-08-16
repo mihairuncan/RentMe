@@ -31,7 +31,36 @@ mat-card-title.mat-card-title, mat-card-subtitle.mat-card-subtitle {
     margin-bottom: 0;
 }
 
+
+mat-card-title.mat-card-title {
+line-height: 20px;
+}
+
 .badge {
     font-size: 15px;
     font-weight: 500;
 }
+
+
+a.ngx-gallery-thumbnail.ngx-gallery-active.ngx-gallery-clickable{
+    background-size: contain;
+}
+
+.card-title{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.description{
+    height: 100px;
+    display: -webkit-box;
+    margin: 0 auto;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

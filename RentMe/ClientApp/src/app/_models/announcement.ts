@@ -7,7 +7,8 @@ export interface Announcement {
     rentPrice: string;
     rentPeriod: string;
     addedOn: string;
-    postedBy: string;
+    postedById: string;
+    postedByName: string;
     subcategoryName: string;
     photos?: Photo[];
 }

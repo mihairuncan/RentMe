@@ -1,34 +1,40 @@
 <mat-card class="announcement-card">
   <mat-card-header>
-    <mat-card-title>{{announcement.title}}</mat-card-title>
-    <mat-card-subtitle>{{announcement.subcategoryName}}</mat-card-subtitle>
-
-    <div *ngIf="!announcement.isApproved" class="d-block d-sm-none d-lg-block">
-      <div *appHasRole="['Admin','Moderator']" class="approve-icons">
-        <a matTooltip="Approve Announcement" style="cursor: pointer;" class="text-success"
-          (click)="approveAnnouncement(announcement.id)">
-          <mat-icon>done</mat-icon>
-        </a>
-        <a matTooltip="Reject Announcement" style="cursor: pointer;" class="text-danger ml-3"
-          (click)="rejectAnnouncement(announcement.id)">
-          <mat-icon>delete</mat-icon>
-        </a>
+    <div class="p-0 w-100">
+      <div class="card-title">
+        {{announcement.title}}
       </div>
+      <div *ngIf="!announcement.isApproved" class="d-block d-sm-none d-lg-block p-0">
+        <div *appHasRole="['Admin','Moderator']" class="approve-icons w-100">
+          <a matTooltip="Approve Announcement" style="cursor: pointer;" class="text-success"
+            (click)="approveAnnouncement(announcement.id)">
+            <mat-icon>done</mat-icon>
+          </a>
+          <a matTooltip="Reject Announcement" style="cursor: pointer;" class="text-danger ml-3"
+            (click)="rejectAnnouncement(announcement.id)">
+            <mat-icon>delete</mat-icon>
+          </a>
+        </div>
+      </div>
+      <mat-card-subtitle class="py-2">{{announcement.subcategoryName}}</mat-card-subtitle>
     </div>
 
-
   </mat-card-header>
+
+  <div class="container text-center m-1">
+    <span *ngIf="!announcement.isApproved" class="badge badge-pill badge-danger">Waiting for approval</span>
+  </div>
   <div class="text-center">
     <img src={{announcement.mainPhotoUrl}}>
   </div>
-  <mat-card-content>
-    <p class="d-none d-sm-block">{{announcement.description}}</p>
+  <mat-card-content class="mb-0">
+    <div class="d-none d-sm-block description">{{announcement.description}}</div>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>Details</button>
-    <button mat-button>Contact</button>
-    <!-- <p class="text-right d-inline position-absolute alert alert-success" style="right: 15px; bottom: 0;"> {{announcement.rentPrice}}€ / {{announcement.rentPeriod}}</p> -->
-    <span class="badge badge-pill badge-success position-absolute" style="right: 15px; bottom: 17px;">{{announcement.rentPrice}}€ / {{announcement.rentPeriod}}</span>
-
+  <mat-card-actions class="mb-0">
+    <button class="btn btn-link px-2" [routerLink]="['/announcement/'+announcement.id]">More Details</button>
+    <span class="badge badge-pill badge-success position-absolute"
+      style="right: 15px; bottom: 17px;">{{announcement.rentPrice | number:'1.2-2'}}€ /
+      {{announcement.rentPeriod}}</span>
   </mat-card-actions>
+  <p class="col-6 p-0"><strong>Added: </strong><br>{{announcement.addedOn | timeAgo}}</p>
 </mat-card>

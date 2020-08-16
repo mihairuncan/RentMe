@@ -33,6 +33,7 @@ export class NavMenuComponent implements OnInit {
     localStorage.removeItem('user');
     this.authService.decodedToken = null;
     this.authService.currentUser = null;
+    this.authService.isLoggedIn.next(false);
     this.notificationService.info('Logged out');
     this.router.navigate(['']);
   }
