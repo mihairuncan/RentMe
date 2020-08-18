@@ -19,16 +19,16 @@
         </strong>
       </p>
     </div>
-<div *ngIf="announcement.postedById === loggedInUserId">
-  <a [routerLink]="['/edit-announcement/' + announcement.id]">Edit Announcement</a>
-</div>
+    <div *ngIf="announcement.postedById === loggedInUserId">
+      <a [routerLink]="['/edit-announcement/' + announcement.id]">Edit Announcement</a>
+    </div>
 
   </div>
 
-  <div class="col-lg-6">
+  <div class="col-lg-6" style="z-index: 0;">
     <ngx-gallery *ngIf="galleryImages.length>0" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
     <div class="font-weight-bold text-secondary h-100" *ngIf="galleryImages.length==0">
-      <p  class="lead">
+      <p class="lead">
         There are no photos for this announcement.
       </p>
       <div class="container display-1">
@@ -37,3 +37,8 @@
     </div>
   </div>
 </div>
+
+<div class="mb-5" *ngIf="this.authService.loggedIn() && announcement.postedById !== loggedInUserId">
+  <app-user-messages></app-user-messages>
+</div>
+

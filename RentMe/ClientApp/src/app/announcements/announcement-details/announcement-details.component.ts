@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Announcement } from 'src/app/_models/announcement';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { AuthenticationService } from 'src/app/_services/auth.service';
+import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
   selector: 'app-announcement-details',
@@ -17,13 +18,16 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.announcement = data['announcement'];
     });
+
+    this.messageService.setRecipientId(this.announcement.postedById);
 
     this.galleryOptions = [
       {
@@ -36,7 +40,9 @@ export class AnnouncementDetailsComponent implements OnInit {
       }
     ];
     this.galleryImages = this.getImages();
-    this.loggedInUserId = this.authService.decodedToken.nameid;
+    if (this.authService.loggedIn()) {
+      this.loggedInUserId = this.authService.decodedToken.nameid;
+    }
   }
 
   getImages() {

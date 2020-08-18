@@ -1,0 +1,17 @@
+.message {
+    background-color: wheat;
+}
+
+.message:hover {
+    background-color: rgb(238, 232, 222);
+}
+
+.datetime{
+    font-size: 0.8rem;
+}
+
+.message-content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

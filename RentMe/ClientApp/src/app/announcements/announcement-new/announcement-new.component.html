@@ -117,10 +117,10 @@
           </button>
 
           <div *ngIf="announcement" class="text-center">
-            <button class="btn btn-primary btn-block py-2" [disabled]="!newAnnouncementForm.valid" type="submit">
+            <button class="btn btn-primary btn-block py-2 mb-2" [disabled]="!newAnnouncementForm.valid" type="submit">
               <i class="fa fa-floppy-o mr-2"></i><span class="font-weight-bold">Update announcement</span>
             </button>
-            <a [routerLink]="['/photos/'+announcement.id]">Edit Photos</a>
+            <a [routerLink]="['/photos/'+announcement.id]" class="mt-2">Edit Photos</a>
           </div>
 
         </div>

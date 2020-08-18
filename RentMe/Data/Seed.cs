@@ -43,6 +43,7 @@ namespace RentMe.Data
                 };
                 userManager.CreateAsync(user, "password").Wait();
                 userManager.AddToRoleAsync(user, "Admin").Wait();
+                userManager.AddToRoleAsync(user, "Regular").Wait();
             }
 
             if (!context.Categories.Any())

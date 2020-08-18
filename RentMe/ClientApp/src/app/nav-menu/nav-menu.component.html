@@ -8,13 +8,21 @@
       </button>
       <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse" [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-          <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
+          <li *ngIf="loggedIn()" class="nav-item mr-2" routerLinkActive="active">
             <div class="py-1">
-              <a *appHasRole="['Admin','Moderator']" class="nav-link text-white" [routerLink]="['/admin']">
-                <i class="fa fa-id-card"></i>
-                Admin Panel</a>
+              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link text-white"
+                [routerLink]="['/myMessages']">
+                <i class="fa fa-comments"></i> My Messages</a>
             </div>
           </li>
+          <li *ngIf="loggedIn()" class="nav-item mr-2" routerLinkActive="active">
+            <div class="py-1">
+              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link text-white"
+              [routerLink]="['/myAnnouncements']">
+              <i class="fa fa-bullhorn"></i> My Announcements</a>
+            </div>
+          </li>
+          
           <li>
             <div *ngIf="loggedIn()" style="cursor: pointer; border-left: 1px solid white;"
               class="dropdown mt-md-2 py-1 px-2 text-white ml-2" dropdown>
@@ -26,27 +34,24 @@
 
                 <a class="dropdown-item" [routerLink]="['/member/edit']">
                   <i class="fa fa-user"></i> Edit Profile</a>
-
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#" [routerLink]="['/myAnnouncements']">
-                  <i class="fa fa-bullhorn"></i> My Announcements</a>
-
+                <a *appHasRole="['Admin','Moderator']" class="dropdown-item" [routerLink]="['/admin']">
+                  <i class="fa fa-id-card"></i> Admin Panel</a>
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" href="#" (click)="logout()">
                   <i class="fa fa-sign-out"></i> Logout</a>
-
               </div>
             </div>
           </li>
           <li *ngIf="!loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/register']">
+            <a class="nav-link text-white mr-2" [routerLink]="['/register']">
               <i class="fa fa-user-plus"></i>
               Register
             </a>
           </li>
-          <li *ngIf="!loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf="!loggedIn()" class="nav-item mr-2" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" [routerLink]="['/login']">
               <i class="fa fa-sign-in"></i>
               Login

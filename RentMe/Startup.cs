@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using RentMe.Data;
 using RentMe.Helpers;
+using RentMe.Hubs;
 using RentMe.Models;
 using RentMe.Services;
 using System;
@@ -83,19 +84,20 @@ namespace RentMe
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<ISubcategoryService, SubcategoryService>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
-
+            services.AddScoped<IMessageService, MessageService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot";
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -133,6 +135,7 @@ namespace RentMe
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/messageHub");
             });
 
             app.UseSpa(spa =>

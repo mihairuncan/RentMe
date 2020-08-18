@@ -13,7 +13,6 @@ namespace RentMe.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "RequireAdminRole")]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -26,6 +25,7 @@ namespace RentMe.Controllers
         }
 
         [HttpGet("usersWithRoles")]
+        [Authorize(Policy = "ModerateRole")]
         public async Task<IActionResult> GetUsersWithRoles([FromQuery] UserParams userParams)
         {
             var users = await _userService.GetUsersWithRoles(userParams);
@@ -39,6 +39,7 @@ namespace RentMe.Controllers
         }
 
         [HttpPost("editRoles/{userName}")]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> EditRoles(string userName, RolesForEdit rolesForEdit)
         {
             return Ok(await _userService.EditRoles(userName, rolesForEdit));

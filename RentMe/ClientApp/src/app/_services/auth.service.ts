@@ -13,6 +13,7 @@ export class AuthenticationService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
+
   isLoggedIn = new BehaviorSubject<boolean>(this.loggedIn());
   userIsLoggedIn = this.isLoggedIn.asObservable();
 

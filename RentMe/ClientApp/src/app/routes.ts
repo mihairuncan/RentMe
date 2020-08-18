@@ -15,6 +15,7 @@ import { AnnouncementDetailsComponent } from './announcements/announcement-detai
 import { AnnouncementResolver } from './_resolvers/announcement-details.resolver';
 import { MyAnnouncementListComponent } from './announcements/my-announcement-list/my-announcement-list.component';
 import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver';
+import { MessagesListComponent } from './messages/messages-list/messages-list.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -52,6 +53,9 @@ export const routes: Routes = [
                 path: 'edit-announcement/:announcementId', component: AnnouncementNewComponent,
                 resolve: { announcement: AnnouncementResolver }
             },
+            {
+                path: 'myMessages', component: MessagesListComponent
+            }
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' },

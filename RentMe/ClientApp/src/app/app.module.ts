@@ -50,6 +50,9 @@ import { AnnouncementDetailsComponent } from './announcements/announcement-detai
 import { AnnouncementResolver } from './_resolvers/announcement-details.resolver';
 import { MyAnnouncementListComponent } from './announcements/my-announcement-list/my-announcement-list.component';
 import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver';
+import { MessageService } from './_services/message.service';
+import { UserMessagesComponent } from './messages/user-messages/user-messages.component';
+import { MessagesListComponent } from './messages/messages-list/messages-list.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -75,7 +78,9 @@ export function tokenGetter() {
       AnnouncementManagementComponent,
       AnnouncementDetailsComponent,
       TimeAgoPipe,
-      MyAnnouncementListComponent
+      MyAnnouncementListComponent,
+      UserMessagesComponent,
+      MessagesListComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -124,7 +129,8 @@ export function tokenGetter() {
       AnnouncementsResolver,
       AnnouncementService,
       AnnouncementResolver,
-      MyAnnouncementsResolver
+      MyAnnouncementsResolver,
+      MessageService
    ],
    entryComponents: [
       RolesModalComponent

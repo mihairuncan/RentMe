@@ -40,6 +40,9 @@ namespace RentMe.Helpers
                     opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain == true).Url)
                 );
 
+            CreateMap<MessageForCreation, Message>().ReverseMap();
+            CreateMap<Message, MessageToReturn>();
+            CreateMap<Message, MessageForList>();
 
         }
     }

@@ -13,6 +13,7 @@ namespace RentMe.Services
 {
     public interface IUserService
     {
+        public Task<User> GetUser(string userId);
         public Task<PagedList<User>> GetUsersWithRoles(UserParams userParams);
         public Task<IEnumerable<string>> EditRoles(string userName, RolesForEdit rolesForEdit);
     }
@@ -26,6 +27,13 @@ namespace RentMe.Services
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        public async Task<User> GetUser(string userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            return user;
         }
 
         public async Task<PagedList<User>> GetUsersWithRoles(UserParams userParams)
