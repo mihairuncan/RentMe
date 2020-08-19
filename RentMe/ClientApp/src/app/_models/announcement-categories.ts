@@ -7,15 +7,18 @@ export const CATEGORIES: Category[] = [
         subcategories: [
             {
                 name: 'clothes-for-women',
-                displayName: 'Clothes and accessories for women'
+                displayName: 'Clothes and accessories for women',
+                imageUrl: 'https://i.ibb.co/kJzGR99/clothes-women.jpg'
             },
             {
                 name: 'clothes-for-men',
-                displayName: 'Clothes and accessories for men'
+                displayName: 'Clothes and accessories for men',
+                imageUrl: 'https://i.ibb.co/x1d93B3/clothes-men.jpg'
             },
             {
                 name: 'clothes-for-kids',
-                displayName: 'Clothes and accessories for kids'
+                displayName: 'Clothes and accessories for kids',
+                imageUrl: 'https://i.ibb.co/zrmrWfM/clothes-kids.jpg'
             },
         ]
     },
@@ -25,15 +28,18 @@ export const CATEGORIES: Category[] = [
         subcategories: [
             {
                 name: 'desktop',
-                displayName: 'Desktop'
+                displayName: 'Desktop',
+                imageUrl: 'https://i.ibb.co/Q8MzrK8/games-desktop.png'
             },
             {
                 name: 'playStation',
-                displayName: 'PlayStation'
+                displayName: 'PlayStation',
+                imageUrl: 'https://i.ibb.co/LZrF1BY/games-playstation.jpg'
             },
             {
                 name: 'xbox',
-                displayName: 'Xbox'
+                displayName: 'Xbox',
+                imageUrl: 'https://i.ibb.co/D5yY72G/games-xbox.jpg'
             },
         ]
     },
@@ -43,15 +49,18 @@ export const CATEGORIES: Category[] = [
         subcategories: [
             {
                 name: 'apartments',
-                displayName: 'Apartments'
+                displayName: 'Apartments',
+                imageUrl: 'https://i.ibb.co/B2Gj3dX/apartments.jpg'
             },
             {
                 name: 'houses',
-                displayName: 'Houses'
+                displayName: 'Houses',
+                imageUrl: 'https://i.ibb.co/QCFwpPg/houses.jpg'
             },
             {
                 name: 'commercial',
-                displayName: 'Commercial'
+                displayName: 'Commercial',
+                imageUrl: 'https://i.ibb.co/nQBQ9b0/commercial.jpg'
             }
         ]
     },
@@ -61,23 +70,28 @@ export const CATEGORIES: Category[] = [
         subcategories: [
             {
                 name: 'cars',
-                displayName: 'Cars'
+                displayName: 'Cars',
+                imageUrl: 'https://i.ibb.co/0JN63v7/cars.jpg'
             },
             {
                 name: 'caravans',
-                displayName: 'Caravans'
+                displayName: 'Caravans',
+                imageUrl: 'https://i.ibb.co/nfh1Lxv/caravans.jpg'
             },
             {
                 name: 'motorcycles',
-                displayName: 'Motorcycles'
+                displayName: 'Motorcycles',
+                imageUrl: 'https://i.ibb.co/RpSp30r/motorcycles.jpg'
             },
             {
                 name: 'bicycles',
-                displayName: 'Bicycles'
+                displayName: 'Bicycles',
+                imageUrl: 'https://i.ibb.co/VLxpSwD/bicycles.jpg'
             },
             {
                 name: 'electric-scooters',
-                displayName: 'Electric Scooters'
+                displayName: 'Electric Scooters',
+                imageUrl: 'https://i.ibb.co/SsWXHrh/electric-scooter.jpg'
             },
         ]
     },
@@ -87,11 +101,13 @@ export const CATEGORIES: Category[] = [
         subcategories: [
             {
                 name: 'books',
-                displayName: 'Books'
+                displayName: 'Books',
+                imageUrl: 'https://i.ibb.co/rHjM3vM/books.jpg'
             },
             {
                 name: 'board-games',
-                displayName: 'Board Games'
+                displayName: 'Board Games',
+                imageUrl: 'https://i.ibb.co/fFy3wFW/board-games.jpg'
             },
         ]
     }

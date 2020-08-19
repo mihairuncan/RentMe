@@ -138,7 +138,7 @@ namespace RentMe.Services
                 messages.Add(messageForList);
             }
 
-            messages.OrderByDescending(m => m.MessageSent);
+            messages = messages.OrderByDescending(m => m.MessageSent).ToList();
             return messages;
         }
     }

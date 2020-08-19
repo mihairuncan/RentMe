@@ -29,6 +29,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   logout() {
+    this.collapse();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.authService.decodedToken = null;
@@ -40,5 +41,30 @@ export class NavMenuComponent implements OnInit {
 
   loggedIn() {
     return this.authService.loggedIn();
+  }
+
+  openMyMessages() {
+    this.collapse();
+    this.router.navigate(['myMessages']);
+  }
+
+  openMyAnnouncements() {
+    this.collapse();
+    this.router.navigate(['myAnnouncements']);
+  }
+
+  openAdminPanel() {
+    this.collapse();
+    this.router.navigate(['admin']);
+  }
+
+  openLogin() {
+    this.collapse();
+    this.router.navigate(['login']);
+  }
+
+  openRegister() {
+    this.collapse();
+    this.router.navigate(['register']);
   }
 }

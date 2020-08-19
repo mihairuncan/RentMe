@@ -41,13 +41,17 @@ export class AnnouncementService {
     return this.http.delete(this.baseUrl + 'api/announcements/' + announcementId + '/photos/' + photoId);
   }
 
-  getAnnouncements(subcategoryName: string, page?, itemsPerPage?) {
+  getAnnouncements(subcategoryName: string, page?, itemsPerPage?, searchText?) {
     const paginatedResult: PaginatedResult<AnnouncementForList[]> = new PaginatedResult<AnnouncementForList[]>();
     let params = new HttpParams();
 
     if (page != null && itemsPerPage != null) {
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
+    }
+
+    if (searchText != null) {
+      params = params.append('searchText', searchText);
     }
 
     return this.http.get<AnnouncementForList[]>(this.baseUrl + 'api/announcements/subcategory/'

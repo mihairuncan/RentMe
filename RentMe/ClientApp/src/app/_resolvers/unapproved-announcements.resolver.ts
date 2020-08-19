@@ -14,7 +14,6 @@ export class UnapprovedAnnouncementsResolver implements Resolve<AnnouncementForL
 
     constructor(
         private adminService: AdminService,
-        private authService: AuthenticationService,
         private router: Router,
         private notificationService: NotifyService,
         ) { }

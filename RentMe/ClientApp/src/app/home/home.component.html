@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-lg-3 mb-3">
 
-    <h1 class="mb-4">Rent Me</h1>
+    <h1 class="mb-4"> <img src="assets/logo-text.png" alt="">
+    </h1>
     <div class="list-group">
       <a *ngFor="let category of categories" (click)="changeCategory(category.name)"
         [ngClass]="{'active': selectedCategoryName === category.name}"
@@ -12,29 +13,29 @@
         <i class="fa fa-plus mr-2"></i>Add New Announcement</a>
     </div>
   </div>
-  <!-- /.col-lg-3 -->
 
   <div class="col-lg-9">
     <carousel [pauseOnFocus]="true" class="d-none d-sm-block">
       <slide>
-        <img src="assets/images/nature/1.jpg" alt="First slide" style="display: block; height: 300px; width: 100%;">
+        <img src="https://i.ibb.co/DDfFNyg/3.jpg" alt="First slide" style="display: block; height: 300px; width: 100%;">
         <div class="carousel-caption d-none d-md-block">
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <!-- <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> -->
         </div>
       </slide>
       <slide>
-        <img src="assets/images/nature/2.jpg" alt="Second slide" style="display: block; height: 300px; width: 100%;">
+        <img src="https://i.ibb.co/ngK7d2N/2.jpg" alt="Second slide"
+          style="display: block; height: 300px; width: 100%;">
         <div class="carousel-caption d-none d-md-block">
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <!-- <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->bdedff
         </div>
       </slide>
       <slide>
-        <img src="assets/images/nature/3.jpg" alt="Third slide" style="display: block; height: 300px; width: 100%;">
+        <img src="https://i.ibb.co/61RtQBb/1.jpg" alt="Third slide" style="display: block; height: 300px; width: 100%;">
         <div class="carousel-caption d-none d-md-block">
-          <h3>Third slide label</h3>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+          <!-- <h3>Third slide label</h3>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> -->
         </div>
       </slide>
     </carousel>
@@ -42,7 +43,7 @@
     <div>
       <div class="row mt-4">
         <app-subcategory-card *ngFor="let subcategory of subcategories" class="subcategory-card col-lg-4 col-md-6 mb-4"
-          [linkText]="subcategory.displayName" [subcategoryName]="subcategory.name">
+          [linkText]="subcategory.displayName" [subcategoryName]="subcategory.name" [imageUrl]="subcategory.imageUrl">
         </app-subcategory-card>
       </div>
     </div>

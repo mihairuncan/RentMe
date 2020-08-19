@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-dark bg-primary border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']"><img src="assets/favicon-32x32.png" alt=""> </a>
+      <a class="navbar-brand" [routerLink]="['/']"><img src="assets/logo-white4.png" style="height: 50px;" alt=""> </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
         aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon text-white"></span>
@@ -10,23 +10,23 @@
         <ul class="navbar-nav flex-grow">
           <li *ngIf="loggedIn()" class="nav-item mr-2" routerLinkActive="active">
             <div class="py-1">
-              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link text-white"
-                [routerLink]="['/myMessages']">
+              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link px-2 text-white"
+                (click)="openMyMessages()" style="cursor: pointer;">
                 <i class="fa fa-comments"></i> My Messages</a>
             </div>
           </li>
           <li *ngIf="loggedIn()" class="nav-item mr-2" routerLinkActive="active">
             <div class="py-1">
-              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link text-white"
-              [routerLink]="['/myAnnouncements']">
-              <i class="fa fa-bullhorn"></i> My Announcements</a>
+              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link px-2 text-white"
+                (click)="openMyAnnouncements()" style="cursor: pointer;">
+                <i class="fa fa-bullhorn"></i> My Announcements</a>
             </div>
           </li>
-          
-          <li>
+
+          <li class="mr-2 ">
             <div *ngIf="loggedIn()" style="cursor: pointer; border-left: 1px solid white;"
-              class="dropdown mt-md-2 py-1 px-2 text-white ml-2" dropdown>
-              <a class="dropdown-toggle" dropdownToggle>
+              class="dropdown mt-md-2 py-1 px-2 text-white" dropdown>
+              <a class="dropdown-toggle dropdown-item p-0" dropdownToggle>
                 <i class="fa fa-user-circle-o"></i>
                 Welcome {{authService.decodedToken?.unique_name | titlecase}}
               </a>
@@ -36,7 +36,8 @@
                   <i class="fa fa-user"></i> Edit Profile</a>
                 <div class="dropdown-divider"></div>
 
-                <a *appHasRole="['Admin','Moderator']" class="dropdown-item" [routerLink]="['/admin']">
+                <a *appHasRole="['Admin','Moderator']" class="dropdown-item" (click)="openAdminPanel()"
+                  style="cursor: pointer;">
                   <i class="fa fa-id-card"></i> Admin Panel</a>
                 <div class="dropdown-divider"></div>
 
@@ -45,17 +46,21 @@
               </div>
             </div>
           </li>
-          <li *ngIf="!loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white mr-2" [routerLink]="['/register']">
-              <i class="fa fa-user-plus"></i>
-              Register
-            </a>
+          <li *ngIf="!loggedIn()" class="nav-item">
+            <div class="py-1">
+              <a class="nav-link px-2 text-white mr-2" (click)="openRegister()" style="cursor: pointer;">
+                <i class="fa fa-user-plus"></i>
+                Register
+              </a>
+            </div>
           </li>
-          <li *ngIf="!loggedIn()" class="nav-item mr-2" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/login']">
-              <i class="fa fa-sign-in"></i>
-              Login
-            </a>
+          <li *ngIf="!loggedIn()" class="nav-item mr-2">
+            <div class="py-1">
+              <a class="nav-link px-2 text-white" (click)="openLogin()" style="cursor: pointer;">
+                <i class="fa fa-sign-in"></i>
+                Login
+              </a>
+            </div>
           </li>
         </ul>
       </div>

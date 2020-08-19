@@ -24,7 +24,6 @@ export class UserManagementComponent implements OnInit {
     private modalService: BsModalService,
     private notifyService: NotifyService,
     private adminService: AdminService,
-    private authService: AuthenticationService,
     private route: ActivatedRoute,
   ) { }
 

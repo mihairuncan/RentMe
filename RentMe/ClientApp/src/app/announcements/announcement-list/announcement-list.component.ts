@@ -17,6 +17,7 @@ export class AnnouncementListComponent implements OnInit {
   pagination: Pagination;
   numberOfPages = 3;
   subcategoryName: string;
+  searchText = '';
 
   constructor(
     private notifyService: NotifyService,
@@ -41,7 +42,8 @@ export class AnnouncementListComponent implements OnInit {
     this.announcementService.getAnnouncements(
       this.subcategoryName,
       this.pagination.currentPage,
-      this.pagination.itemsPerPage
+      this.pagination.itemsPerPage,
+      this.searchText
     )
       .subscribe((res: PaginatedResult<AnnouncementForList[]>) => {
         this.announcements = res.result;
@@ -54,6 +56,24 @@ export class AnnouncementListComponent implements OnInit {
 
   pageChange(pageNumber: number): void {
     this.pagination.currentPage = pageNumber;
+    this.loadAnnouncements();
+    // window.scroll(0, 0);
+    const scrollToTop = window.setInterval(() => {
+      const pos = window.pageYOffset;
+      if (pos > 0) {
+        window.scrollTo(0, pos - 20); // how far to scroll on each step
+      } else {
+        window.clearInterval(scrollToTop);
+      }
+    }, 5);
+  }
+
+  search() {
+    this.loadAnnouncements();
+  }
+
+  reset() {
+    this.searchText = '';
     this.loadAnnouncements();
   }
 

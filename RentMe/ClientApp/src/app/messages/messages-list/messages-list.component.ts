@@ -12,6 +12,7 @@ import { MessageForList } from 'src/app/_models/messageForList';
 export class MessagesListComponent implements OnInit {
   messagesList: MessageForList[];
   selectedUsername: string;
+  recipientId: string;
 
   constructor(
     private messageService: MessageService,
@@ -26,9 +27,13 @@ export class MessagesListComponent implements OnInit {
   loadMessagesList() {
     this.messageService.getMessagesList(this.authService.decodedToken.nameid).subscribe(messages => {
       this.messagesList = messages;
+
+      // if (!this.selectedUsername) {
       this.selectedUsername = this.messagesList[0].userName;
-      const recipentId = this.messagesList[0].userId;
-      this.messageService.setRecipientId(recipentId);
+      this.recipientId = this.messagesList[0].userId;
+      // }
+
+      this.messageService.setRecipientId(this.recipientId);
     }, error => {
       this.notificationService.error(error);
     });
@@ -42,7 +47,7 @@ export class MessagesListComponent implements OnInit {
     }
   }
 
-  refreshMessages(){
+  refreshMessages() {
     this.loadMessagesList();
   }
 }

@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SubcategoryCardComponent implements OnInit {
   @Input() linkText: string;
   @Input() subcategoryName: string;
+  @Input() imageUrl: string;
 
   constructor() { }
 

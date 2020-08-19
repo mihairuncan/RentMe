@@ -189,10 +189,12 @@ namespace RentMe.Services
                                         .Where(a => a.Subcategory.Name == subcategoryName)
                                         .AsQueryable();
 
-            //if (!string.IsNullOrEmpty(userParams.Username))
-            //{
-            //    users = users.Where(u => u.UserName.Contains(userParams.Username));
-            //}
+            if (!string.IsNullOrEmpty(announcementParams.SearchText))
+            {
+                announcements = announcements
+                                        .Where(a => a.Title.Contains(announcementParams.SearchText) ||
+                                                    a.Description.Contains(announcementParams.SearchText));
+            }
 
             announcements = announcements.OrderByDescending(a => a.AddedOn);
 

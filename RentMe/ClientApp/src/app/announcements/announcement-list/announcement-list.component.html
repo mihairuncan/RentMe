@@ -1,27 +1,41 @@
-<a (click)="goBack()" mat-button>
-  <mat-icon>keyboard_return</mat-icon>
-  <span>Back</span>
-
-</a>
 <div class="row">
-
-  <div class="mx-auto">
-    <div *ngIf="announcements?.length === 0" class="row no-announcements ">
-      <div class="container">
-        <div class="jumbotron shadow">
-          <h1 class="display-4 text-center">No announcements here</h1>
-          <hr class="my-4">
+  <div class="col-sm-2 col-lg-6">
+    <a class="p-0" (click)="goBack()" mat-button>
+      <mat-icon>keyboard_return</mat-icon>
+      <span>Back</span>
+    </a>
+  </div>
+  <div class="col-sm-10 col-lg-6" *ngIf="announcements.length > 0 || searchText != ''">
+    <form class="p-0" #searchForm="ngForm" (ngSubmit)="search()">
+      <div class="input-group mb-3">
+        <input type="text" name="searchText" class="form-control" placeholder="Search by title/description"
+          [(ngModel)]="searchText" autocomplete="off">
+        <div class="input-group-append">
+          <button class="btn btn-success" type="submit">Search</button>
+          <button type="button" class="btn btn-outline-warning" (click)="reset()">Reset</button>
         </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="mx-auto">
+    <div *ngIf="announcements?.length === 0">
+      <div class="jumbotron shadow">
+        <h1 class="text-center">No announcements here</h1>
+        <hr class="my-4">
       </div>
     </div>
   </div>
 
-  <div *ngIf="announcements?.length > 0" class="row mt-3 w-100">
+  <div *ngIf="announcements?.length > 0" class="row mt-3 mx-auto w-100">
     <app-announcement-card class="col-sm-6 col-md-4 mb-4" *ngFor="let announcement of announcements"
       [announcement]="announcement">
     </app-announcement-card>
   </div>
 </div>
+
 <div *ngIf="pagination.totalItems > 0" class="d-flex justify-content-center">
   <ngb-pagination [collectionSize]="pagination.totalItems" [directionLinks]=false [(page)]="pagination.currentPage"
     [pageSize]="pagination.itemsPerPage" [maxSize]="numberOfPages" [rotate]="true" [boundaryLinks]="true"

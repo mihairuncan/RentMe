@@ -86,7 +86,7 @@ export function tokenGetter() {
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
       HttpClientModule,
       FormsModule,
-      RouterModule.forRoot(routes),
+      RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
       SimpleNotificationsModule.forRoot(
          {
             position: ['top', 'center'],
@@ -101,8 +101,8 @@ export function tokenGetter() {
       JwtModule.forRoot({
          config: {
             tokenGetter,
-            allowedDomains: ['localhost:5000'],
-            disallowedRoutes: ['localhost:5000/api/auth']
+            allowedDomains: ['localhost:5001'],
+            disallowedRoutes: ['localhost:5001/api/auth']
          },
       }),
       NgbPaginationModule,
