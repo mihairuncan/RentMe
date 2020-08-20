@@ -6,6 +6,7 @@ import { Message } from '../_models/message';
 import { BehaviorSubject } from 'rxjs';
 import { MessageForList } from '../_models/messageForList';
 import * as signalR from '@aspnet/signalr';
+import { AuthenticationService } from './auth.service';
 
 
 @Injectable({
@@ -19,8 +20,11 @@ export class MessageService {
 
   private hubConnection: signalR.HubConnection;
   messageReceived = new EventEmitter<Message>();
+  messageRead = new EventEmitter<string>();
+
 
   constructor(
+    private authService: AuthenticationService,
     private http: HttpClient,
     @Inject('BASE_URL') baseUrl: string
   ) {
@@ -80,7 +84,7 @@ export class MessageService {
 
   public buildConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://10.0.0.5:5001/messageHub')
+      .withUrl('https://10.0.0.5:5001/messageHub/?userId=' + this.authService.decodedToken.nameid)
       .build();
   }
 
@@ -94,7 +98,7 @@ export class MessageService {
       .catch(err => {
         console.log('Error while starting connection: ' + err);
 
-        setTimeout(function(): any { this.startConnection(); }, 3000);
+        setTimeout(function (): any { this.startConnection(); }, 3000);
       });
   }
 
@@ -103,6 +107,12 @@ export class MessageService {
       console.log(data);
       this.messageReceived.emit(data);
     });
+
+    this.hubConnection.on('MessageRead', (readerUserId: string) => {
+      console.log(readerUserId);
+      this.messageRead.emit(readerUserId);
+    });
+
   }
 
 }

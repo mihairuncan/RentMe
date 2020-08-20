@@ -21,6 +21,9 @@ export class MessagesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.messageService.recipientUserId.subscribe(recipientId => {
+      this.recipientId = recipientId;
+    });
     this.loadMessagesList();
   }
 
@@ -28,12 +31,11 @@ export class MessagesListComponent implements OnInit {
     this.messageService.getMessagesList(this.authService.decodedToken.nameid).subscribe(messages => {
       this.messagesList = messages;
 
-      // if (!this.selectedUsername) {
-      this.selectedUsername = this.messagesList[0].userName;
-      this.recipientId = this.messagesList[0].userId;
-      // }
+      if (!this.recipientId) {
+        this.selectedUsername = this.messagesList[0].userName;
+        this.messageService.setRecipientId(this.messagesList[0].userId);
+      }
 
-      this.messageService.setRecipientId(this.recipientId);
     }, error => {
       this.notificationService.error(error);
     });

@@ -15,6 +15,7 @@ export class UserMessagesComponent implements OnInit {
   recipientId: string;
   messages: Message[];
   newMessage: any = {};
+  currentUserId: string;
 
   @Output() newMessages = new EventEmitter();
 
@@ -26,6 +27,7 @@ export class UserMessagesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentUserId = this.authService.decodedToken.nameid;
     this.messageService.recipientUserId.subscribe(recipientId => {
       this.recipientId = recipientId;
       if (recipientId) {
@@ -34,20 +36,29 @@ export class UserMessagesComponent implements OnInit {
     });
 
     this.messageService.messageReceived.subscribe((message: Message) => {
-      // this.messages.unshift(message);
-      this.loadMessages();
+      if (message.recipientId === this.recipientId || message.senderId === this.recipientId) {
+        this.messages.unshift(message);
+        if (message.senderId === this.recipientId) {
+          this.messageService.markAsRead(this.currentUserId, message.id);
+        }
+      }
       this.newMessages.emit();
+    });
+
+    this.messageService.messageRead.subscribe((readerUserId: string) => {
+      if (readerUserId === this.recipientId) {
+        this.loadMessages();
+      }
     });
   }
 
   loadMessages() {
-    const currentUserId = this.authService.decodedToken.nameid;
     this.messageService.getMessageThread(this.authService.decodedToken.nameid, this.recipientId)
       .pipe(
         tap(messages => {
           for (let i = 0; i < messages.length; i++) {
-            if (messages[i].isRead === false && messages[i].recipientId === currentUserId) {
-              this.messageService.markAsRead(currentUserId, messages[i].id);
+            if (messages[i].isRead === false && messages[i].recipientId === this.currentUserId) {
+              this.messageService.markAsRead(this.currentUserId, messages[i].id);
             }
           }
         })

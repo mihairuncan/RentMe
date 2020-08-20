@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -108,7 +109,20 @@ namespace RentMe.Controllers
             if (await _messageService.AddMessage(message))
             {
                 var messageToReturn = _mapper.Map<MessageToReturn>(message);
-                await _hubContext.Clients.All.SendAsync("SignalMessageReceived", messageToReturn);
+
+
+                if (MessageHub._userConnections.ContainsKey(messageForCreation.RecipientId))
+                {
+                    await _hubContext.Clients.Clients(MessageHub._userConnections[messageForCreation.RecipientId])
+                                            .SendAsync("SignalMessageReceived", messageToReturn);
+                }
+
+                if (MessageHub._userConnections.ContainsKey(userId))
+                {
+                    await _hubContext.Clients.Clients(MessageHub._userConnections[userId])
+                                               .SendAsync("SignalMessageReceived", messageToReturn);
+                }
+
                 return CreatedAtRoute("GetMessage", new { userId, messageId = message.Id }, messageToReturn);
             }
 
@@ -165,6 +179,12 @@ namespace RentMe.Controllers
             }
 
             await _messageService.MarkMessageAsRead(message);
+
+            await _hubContext.Clients.Clients(MessageHub._userConnections[message.SenderId])
+                .SendAsync("MessageRead", userId);
+
+            //await _hubContext.Clients.Clients(MessageHub._userConnections[userId])
+            //                            .SendAsync("MessageRead");
 
             return NoContent();
         }

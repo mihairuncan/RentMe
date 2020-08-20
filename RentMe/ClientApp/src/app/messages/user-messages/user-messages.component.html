@@ -1,5 +1,5 @@
-<div class="card rounded">
-  <div class="card-footer shadow">
+<div class="card rounded shadow" style="height: 95%;">
+  <div class="card-footer">
     <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
       <div class="input-group">
         <input type="text" 
@@ -15,7 +15,8 @@
       </div>
     </form>
   </div>
-  <div class="card-body shadow">
+  <mat-divider></mat-divider>
+  <div class="card-body">
     <div *ngIf="messages?.length === 0">
       <p>No messages yet... say hi using the mesage box</p>
     </div>
@@ -39,16 +40,16 @@
 
         <!-- to me -->
         <div *ngIf="message.senderId!= recipientId">
-          <span class="chat-img float-left">
+          <span class="float-left">
             <img src="../../../assets/user.png" class="rounded-circle">
           </span>
           <div class="chat-body">
             <div class="header">
               <small class="text-muted float-right text-right">
                 <span class="fa fa-clock-o"> {{message.messageSent | timeAgo}}</span>
-                <!-- <br> -->
-                <!-- <span *ngIf="!message.isRead" class="text-danger"><small>(unread)</small></span>
-                <span *ngIf="message.isRead" class="text-success "><small>(Read {{message.dateRead | timeAgo}})</small></span> -->
+                <br>
+                <span *ngIf="!message.isRead" class="text-danger"><small>(unread)</small></span>
+                <span *ngIf="message.isRead" class="text-success "><small>(Read {{message.dateRead | timeAgo}})</small></span>
 
               </small>
               <strong class="primary-font ">{{message.senderUserName | titlecase}}</strong>

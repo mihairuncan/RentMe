@@ -84,3 +84,9 @@ body::-webkit-scrollbar {
 input:focus, button:focus, a:focus {
   box-shadow: none !important;
 }
+
+/* user icons */
+.rounded-circle {
+  height: 50px;
+  width: 50px;
+}
