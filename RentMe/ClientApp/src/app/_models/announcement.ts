@@ -10,5 +10,8 @@ export interface Announcement {
     postedById: string;
     postedByName: string;
     subcategoryName: string;
+    city: string;
+    phoneNumber: string;
+    isApproved: boolean;
     photos?: Photo[];
 }

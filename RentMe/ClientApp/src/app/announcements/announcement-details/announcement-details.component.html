@@ -8,17 +8,43 @@
     </p>
 
     <div>
-      <p>
-        <span class="badge badge-pill badge-success">{{announcement.rentPrice | number:'1.2-2'}}€ /
-          {{announcement.rentPeriod}}</span>
-      </p>
-      <p>Posted by
-        <strong>{{announcement.postedByName}}</strong> on
-        <strong>
-          {{announcement.addedOn | date:'mediumDate'}}
-        </strong>
-      </p>
+      <div class="d-flex justify-content-between">
+        <h5 class="d-inline mr-2"> <span class="badge badge-pill badge-success">
+            {{announcement.rentPrice | number:'1.2-2'}}€ / {{announcement.rentPeriod}}</span></h5>
+        <h5 class="d-inline mr-2"><span class="badge badge-pill badge-info">{{announcement.city }}</span></h5>
+        <h5 class="d-inline mr-2"><span class="badge badge-pill badge-secondary">{{announcement.phoneNumber}}</span>
+        </h5>
+        <h5 *ngIf="!announcement.isApproved" class="d-inline"><span class="badge badge-pill badge-danger">Waiting for
+            approval</span></h5>
+
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-6">Posted by
+          <strong>{{announcement.postedByName}}</strong> on
+          <strong>
+            {{announcement.addedOn | date:'mediumDate'}}
+          </strong>
+        </div>
+        <div class="d-inline col-6 text-right" *ngIf="!announcement.isApproved">
+          <div *appHasRole="['Admin','Moderator']">
+            <a matTooltip="Approve Announcement" style="cursor: pointer;" class="text-success"
+              (click)="approveAnnouncement(announcement.id)">
+              <mat-icon>done</mat-icon>
+            </a>
+            <a matTooltip="Reject Announcement" style="cursor: pointer;" class="text-danger ml-3"
+              (click)="rejectAnnouncement(announcement.id)">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
+
+
+
+
+
     <div *ngIf="announcement.postedById === loggedInUserId">
       <a [routerLink]="['/edit-announcement/' + announcement.id]">Edit Announcement</a>
     </div>
@@ -26,7 +52,8 @@
   </div>
 
   <div class="col-lg-6" style="z-index: 0;">
-    <ngx-gallery style="max-width: 100%;" *ngIf="galleryImages.length>0" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+    <ngx-gallery style="max-width: 100%;" *ngIf="galleryImages.length>0" [options]="galleryOptions"
+      [images]="galleryImages"></ngx-gallery>
     <div class="font-weight-bold text-secondary h-100" *ngIf="galleryImages.length==0">
       <p class="lead">
         There are no photos for this announcement.
@@ -38,7 +65,7 @@
   </div>
 </div>
 
-<div class="mb-5" *ngIf="this.authService.loggedIn() && announcement.postedById !== loggedInUserId">
+<div class="mb-2 inbox-messsage rounded shadow p-2"
+  *ngIf="this.authService.loggedIn() && announcement.postedById !== loggedInUserId">
   <app-user-messages></app-user-messages>
 </div>
-

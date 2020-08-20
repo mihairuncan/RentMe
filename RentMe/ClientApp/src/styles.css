@@ -86,7 +86,69 @@ input:focus, button:focus, a:focus {
 }
 
 /* user icons */
+
 .rounded-circle {
   height: 50px;
   width: 50px;
+}
+
+.inbox-messsage {
+	border: 1px solid #ddd;
+	clear: both;
+	overflow: hidden;
+}
+
+@media screen and (max-width: 1369px) {
+  body {
+    /* background-color: yellow; */
+  }
+  .navbar-brand img {
+    height: 40px !important;
+  }
+  .card.h-100 {
+    height: 80% !important;
+  }
+  .container {
+    max-width: 1000px;
+  }
+  .card-body {
+    padding: 0 !important;
+    height: 100px;
+  }
+  .message-history {
+    height: 390px !important;
+  }
+  .inbox-chat.scroll {
+    height: 455px !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  body {
+    /* background-color: lightblue; */
+  }
+  .inbox-chat.scroll {
+    height: 160px !important;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  body {
+    /* background-color: green; */
+  }
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    /* background-color: red; */
+  }
+}
+
+@media screen and (min-width: 1370px) {
+  body {
+    /* background-color: violet; */
+  }
+  .message-history {
+    height: 475px !important;
+  }
 }

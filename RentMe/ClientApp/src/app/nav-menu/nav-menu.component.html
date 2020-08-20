@@ -32,14 +32,14 @@
               </a>
               <div class="dropdown-menu mt-2" *dropdownMenu>
 
-                <a class="dropdown-item" [routerLink]="['/member/edit']">
+                <!-- <a class="dropdown-item" [routerLink]="['/member/edit']">
                   <i class="fa fa-user"></i> Edit Profile</a>
-                <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div> -->
 
                 <a *appHasRole="['Admin','Moderator']" class="dropdown-item" (click)="openAdminPanel()"
                   style="cursor: pointer;">
                   <i class="fa fa-id-card"></i> Admin Panel</a>
-                <div class="dropdown-divider"></div>
+                <div *appHasRole="['Admin','Moderator']" class="dropdown-divider"></div>
 
                 <a class="dropdown-item" href="#" (click)="logout()">
                   <i class="fa fa-sign-out"></i> Logout</a>

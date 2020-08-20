@@ -59,7 +59,8 @@ namespace RentMe.Services
                                                        && m.SenderDeleted == false)
                                                   .Include(m => m.Sender)
                                                   .Include(m => m.Recipient)
-                                                  .OrderByDescending(m => m.MessageSent)
+                                                  //.OrderByDescending(m => m.MessageSent)
+                                                  .OrderBy(m => m.MessageSent)
                                                   .ToListAsync();
             return messages;
         }

@@ -21,10 +21,14 @@ export class MessagesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadMessagesList();
+
     this.messageService.recipientUserId.subscribe(recipientId => {
       this.recipientId = recipientId;
     });
-    this.loadMessagesList();
+
+    console.log(this.selectedUsername);
+    console.log(this.recipientId);
   }
 
   loadMessagesList() {

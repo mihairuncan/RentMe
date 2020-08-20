@@ -13,6 +13,10 @@ namespace RentMe.ViewModels
         public DateTime AddedOn { get; set; }
         public string PostedByName { get; set; }
         public string PostedById { get; set; }
+        public string City { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool IsApproved { get; set; }
         public ICollection<PhotoForDetailed> Photos { get; set; }
+
     }
 }

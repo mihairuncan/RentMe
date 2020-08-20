@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewChecked } from '@angular/core';
 import { Message } from 'src/app/_models/message';
 import { AuthenticationService } from 'src/app/_services/auth.service';
 import { tap } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { MessageService } from 'src/app/_services/message.service';
   templateUrl: './user-messages.component.html',
   styleUrls: ['./user-messages.component.css']
 })
-export class UserMessagesComponent implements OnInit {
+export class UserMessagesComponent implements OnInit, AfterViewChecked {
 
   recipientId: string;
   messages: Message[];
@@ -26,6 +26,11 @@ export class UserMessagesComponent implements OnInit {
     private notificationService: NotifyService,
   ) { }
 
+
+  ngAfterViewChecked() {
+    document.querySelector('.message-history').scroll(0, document.querySelector('.message-history').scrollHeight);
+  }
+
   ngOnInit() {
     this.currentUserId = this.authService.decodedToken.nameid;
     this.messageService.recipientUserId.subscribe(recipientId => {
@@ -37,12 +42,14 @@ export class UserMessagesComponent implements OnInit {
 
     this.messageService.messageReceived.subscribe((message: Message) => {
       if (message.recipientId === this.recipientId || message.senderId === this.recipientId) {
-        this.messages.unshift(message);
+        this.messages.push(message);
         if (message.senderId === this.recipientId) {
           this.messageService.markAsRead(this.currentUserId, message.id);
         }
       }
       this.newMessages.emit();
+    }, error => {
+      this.notificationService.error(error);
     });
 
     this.messageService.messageRead.subscribe((readerUserId: string) => {
@@ -74,13 +81,9 @@ export class UserMessagesComponent implements OnInit {
     this.newMessage.recipientId = this.recipientId;
     this.messageService.sendMessage(this.authService.decodedToken.nameid, this.newMessage)
       .subscribe((message: Message) => {
-        // this.messages.unshift(message);
         this.newMessage.content = '';
       }, error => {
         this.notificationService.error(error);
       });
   }
-
-
-
 }

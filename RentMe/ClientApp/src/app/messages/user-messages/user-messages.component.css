@@ -1,31 +1,94 @@
-.card {
-    border: none;
+.incoming-message-img {
+	display: inline-block;
+	width: 6%;
 }
 
-.chat {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.incoming-message-img img {
+	width: 100%;
 }
 
-.chat li {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px dotted #b3a9a9;
+.received-message-wrapper {
+	display: inline-block;
+	padding: 0 0 0 10px;
+	vertical-align: top;
+	width: 92%;
 }
 
-.card-body {
-    overflow-y: scroll;
-    height: 400px;
+.received-message p {
+	background: #ebebeb none repeat scroll 0 0;
+	border-radius: 0 15px 15px 15px;
+	color: #646464;
+	font-size: 14px;
+	margin: 0;
+	padding: 5px 10px 5px 12px;
+	width: 100%;
 }
 
-.card-footer {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.time-date {
+	color: #747474;
+	display: block;
+	font-size: 12px;
+	margin: 8px 0 0;
 }
 
-.card-body {
-    background: rgba(0, 0, 0, 0.03);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+.received-message {
+	width: 57%;
+}
+
+.sent-message p {
+	background: #0465ac;
+	border-radius: 12px 15px 15px 0;
+	font-size: 14px;
+	margin: 0;
+	color: #fff;
+	padding: 5px 10px 5px 12px;
+	width: 100%;
+}
+
+.outgoing-message {
+	overflow: hidden;
+	margin: 26px 0 26px;
+}
+
+.sent-message {
+	float: right;
+	width: 46%;
+}
+
+.input-message input {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	color: #4c4c4c;
+	font-size: 15px;
+	min-height: 48px;
+	width: 100%;
+	outline: none;
+}
+
+.type-message {
+	border-top: 1px solid #c4c4c4;
+	position: relative;
+}
+
+.btn-send-message {
+	background: #05728f none repeat scroll 0 0;
+	border: none;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+	font-size: 15px;
+	height: 33px;
+	position: absolute;
+	right: 0;
+	top: 11px;
+	width: 33px;
+}
+
+.message-history {
+	height: 516px;
+	overflow-y: auto;
+}
+
+.btn-send-message:focus, .btn-send-message i:focus {
+	outline: none;
 }

@@ -186,6 +186,7 @@ namespace RentMe.Services
             var announcements = _context.Announcements
                                         .Include(a => a.Photos)
                                         .Include(a => a.Subcategory)
+                                        .Include(a => a.PostedBy)
                                         .Where(a => a.Subcategory.Name == subcategoryName)
                                         .AsQueryable();
 

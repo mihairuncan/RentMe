@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Announcement } from 'src/app/_models/announcement';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { AuthenticationService } from 'src/app/_services/auth.service';
 import { MessageService } from 'src/app/_services/message.service';
+import { AdminService } from 'src/app/_services/admin.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-announcement-details',
   templateUrl: './announcement-details.component.html',
   styleUrls: ['./announcement-details.component.css']
 })
-export class AnnouncementDetailsComponent implements OnInit {
+export class AnnouncementDetailsComponent implements OnInit, AfterViewInit {
   announcement: Announcement;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -18,9 +20,18 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthenticationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private adminService: AdminService,
+    private notifyService: NotificationsService
   ) { }
+
+  ngAfterViewInit() {
+    document.querySelector('.message-history').setAttribute('style', 'height: 275px !important');
+    document.querySelector('.message-history').scroll(0, document.querySelector('.message-history').scrollHeight);
+  }
+
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -56,6 +67,24 @@ export class AnnouncementDetailsComponent implements OnInit {
       });
     }
     return imageUrls;
+  }
+
+  approveAnnouncement(announcementId: string) {
+    this.adminService.approveAnnouncement(announcementId).subscribe(() => {
+      this.announcement.isApproved = true;
+      this.notifyService.success('Announcement approved');
+    }, error => {
+      this.notifyService.error(error);
+    });
+  }
+
+  rejectAnnouncement(announcementId: string) {
+    this.adminService.rejectAnnouncement(announcementId).subscribe(() => {
+      this.notifyService.success('Announcement rejected');
+      this.router.navigate(['admin']);
+    }, error => {
+      this.notifyService.error(error);
+    });
   }
 
 }

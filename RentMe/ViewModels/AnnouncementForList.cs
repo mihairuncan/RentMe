@@ -16,5 +16,6 @@ namespace RentMe.ViewModels
         public bool IsApproved { get; set; }
         public string SubcategoryName { get; set; }
         public string MainPhotoUrl { get; set; }
+        public string City { get; set; }
     }
 }

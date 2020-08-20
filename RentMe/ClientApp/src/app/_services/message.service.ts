@@ -104,12 +104,10 @@ export class MessageService {
 
   private registerSignalEvents(): any {
     this.hubConnection.on('SignalMessageReceived', (data: Message) => {
-      console.log(data);
       this.messageReceived.emit(data);
     });
 
     this.hubConnection.on('MessageRead', (readerUserId: string) => {
-      console.log(readerUserId);
       this.messageRead.emit(readerUserId);
     });
 

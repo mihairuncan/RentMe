@@ -28,6 +28,14 @@ namespace RentMe.Helpers
                 .ForMember(
                     dest => dest.PostedByName,
                     opt => opt.MapFrom(src => src.PostedBy.UserName)
+                )
+                .ForMember(
+                    dest => dest.City,
+                    opt => opt.MapFrom(src => src.PostedBy.City)
+                )
+                .ForMember(
+                    dest => dest.PhoneNumber,
+                    opt => opt.MapFrom(src => src.PostedBy.PhoneNumber)
                 );
 
             CreateMap<Announcement, AnnouncementForList>()
@@ -38,6 +46,10 @@ namespace RentMe.Helpers
                 .ForMember(
                     dest => dest.MainPhotoUrl,
                     opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain == true).Url)
+                )
+                .ForMember(
+                    dest => dest.City,
+                    opt => opt.MapFrom(src => src.PostedBy.City)
                 );
 
             CreateMap<MessageForCreation, Message>().ReverseMap();

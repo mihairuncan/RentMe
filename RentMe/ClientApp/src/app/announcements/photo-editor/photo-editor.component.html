@@ -22,7 +22,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of uploader.queue">
-            <td><strong>{{ item?.file?.name }}</strong></td>
+            <td><strong style="word-break: break-word;">{{ item?.file?.name }}</strong></td>
             <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
           </tr>
         </tbody>

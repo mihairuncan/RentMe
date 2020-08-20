@@ -1,66 +1,40 @@
-<div class="card rounded shadow" style="height: 95%;">
-  <div class="card-footer">
-    <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
-      <div class="input-group">
-        <input type="text" 
-          [(ngModel)]="newMessage.content"
-          name="content"
-          required
-          class="form-control input-sm" 
-          placeholder="send a private message"
-          autocomplete="off">
-        <div class="input-group-append">
-          <button class="btn btn-primary" [disabled]="!messageForm.valid">Send</button>
+<div class="message-history">
+  <div *ngIf="messages?.length===0" class="mt-5 text-center">
+    <h3>You have no previous conversation.</h3>
+  </div>
+  <div *ngFor="let message of messages">
+    <div *ngIf="message.senderId== recipientId">
+      <div class="incoming-message-img"> <img src="../../../assets/user-logo.png"> </div>
+      <div class="received-message-wrapper">
+        <div class="received-message">
+          <p>{{message.content}}</p>
+          <span class="time-date"> {{message.messageSent |  date:'shortTime'}} |
+            {{message.messageSent |  date:'MMMM d'}}</span>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="message.senderId!= recipientId" class="outgoing-message">
+      <div class="sent-message">
+        <p>{{message.content}}</p>
+        <span class="time-date"> {{message.messageSent |  date:'shortTime'}} |
+          {{message.messageSent |  date:'MMMM d'}}
+          <span *ngIf="!message.isRead" class="text-danger"><small><i class="fa fa-check-circle-o"></i></small></span>
+          <span *ngIf="message.isRead" class="text-success "><small><i class="fa fa-check-circle"></i> </small></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="type-message">
+  <div class="input-message">
+    <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
+      <input type="text" [(ngModel)]="newMessage.content" name="content" placeholder="Type a message"
+        autocomplete="off" />
+      <button class="btn-send-message" type="button" [disabled]="!messageForm.valid">
+        <i (click)="sendMessage()" class="fa fa-paper-plane"></i>
+      </button>
     </form>
   </div>
-  <mat-divider></mat-divider>
-  <div class="card-body">
-    <div *ngIf="messages?.length === 0">
-      <p>No messages yet... say hi using the mesage box</p>
-    </div>
-    <ul class="chat">
-      <li *ngFor="let message of messages">
-        <!-- to them -->
-        <div *ngIf="message.senderId== recipientId">
-          <span class="chat-img float-right">
-            <img src="../../../assets/user.png" class="rounded-circle">
-          </span>
-          <div class="chat-body">
-            <div class="header">
-              <strong class="primary-font float-right">{{message.senderUserName | titlecase}}</strong>
-              <small class="text-muted ">
-                <span class="fa fa-clock-o"> {{message.messageSent | timeAgo}}</span>
-              </small>
-            </div>
-            <p>{{message.content}}</p>
-          </div>
-        </div>
-
-        <!-- to me -->
-        <div *ngIf="message.senderId!= recipientId">
-          <span class="float-left">
-            <img src="../../../assets/user.png" class="rounded-circle">
-          </span>
-          <div class="chat-body">
-            <div class="header">
-              <small class="text-muted float-right text-right">
-                <span class="fa fa-clock-o"> {{message.messageSent | timeAgo}}</span>
-                <br>
-                <span *ngIf="!message.isRead" class="text-danger"><small>(unread)</small></span>
-                <span *ngIf="message.isRead" class="text-success "><small>(Read {{message.dateRead | timeAgo}})</small></span>
-
-              </small>
-              <strong class="primary-font ">{{message.senderUserName | titlecase}}</strong>
-
-            </div>
-            <p>{{message.content}}</p>
-          </div>
-        </div>
-      </li>
-    </ul>
-
-  </div>
-
 </div>
