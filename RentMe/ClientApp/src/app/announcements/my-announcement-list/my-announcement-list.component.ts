@@ -5,6 +5,7 @@ import { AnnouncementForList } from 'src/app/_models/announcementForList';
 import { NotifyService } from 'src/app/_services/notify.service';
 import { AnnouncementService } from 'src/app/_services/announcement.service';
 import { Location } from '@angular/common';
+import { AdminService } from 'src/app/_services/admin.service';
 
 @Component({
   selector: 'app-my-announcement-list',
@@ -20,7 +21,8 @@ export class MyAnnouncementListComponent implements OnInit {
     private notifyService: NotifyService,
     private announcementService: AnnouncementService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private adminService: AdminService
   ) { }
 
   ngOnInit() {
@@ -51,6 +53,26 @@ export class MyAnnouncementListComponent implements OnInit {
   pageChange(pageNumber: number): void {
     this.pagination.currentPage = pageNumber;
     this.loadAnnouncements();
+  }
+
+  approveAnnouncement(announcementId: string) {
+    this.adminService.approveAnnouncement(announcementId).subscribe(() => {
+      this.announcements.splice(this.announcements.findIndex(a => a.id === announcementId), 1);
+      this.loadAnnouncements();
+      this.notifyService.success('Announcement approved');
+    }, error => {
+      this.notifyService.error(error);
+    });
+  }
+
+  rejectAnnouncement(announcementId: string) {
+    this.adminService.rejectAnnouncement(announcementId).subscribe(() => {
+      this.announcements.splice(this.announcements.findIndex(a => a.id === announcementId), 1);
+      this.loadAnnouncements();
+      this.notifyService.success('Announcement rejected');
+    }, error => {
+      this.notifyService.error(error);
+    });
   }
 
 }

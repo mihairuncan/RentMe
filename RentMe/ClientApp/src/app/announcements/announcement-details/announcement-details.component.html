@@ -40,17 +40,10 @@
         </div>
       </div>
     </div>
-
-
-
-
-
     <div *ngIf="announcement.postedById === loggedInUserId">
       <a [routerLink]="['/edit-announcement/' + announcement.id]">Edit Announcement</a>
     </div>
-
   </div>
-
   <div class="col-lg-6" style="z-index: 0;">
     <ngx-gallery style="max-width: 100%;" *ngIf="galleryImages.length>0" [options]="galleryOptions"
       [images]="galleryImages"></ngx-gallery>

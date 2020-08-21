@@ -16,7 +16,8 @@
 
   <div *ngIf="announcements?.length > 0" class="row mt-3 w-100 mx-auto">
     <app-announcement-card class="col-sm-6 col-md-4 mb-4" *ngFor="let announcement of announcements"
-      [announcement]="announcement">
+      [announcement]="announcement" (rejectAnnouncementEvent)="rejectAnnouncement($event)"
+      (approveAnnouncementEvent)="approveAnnouncement($event)" >
     </app-announcement-card>
   </div>
 </div>
