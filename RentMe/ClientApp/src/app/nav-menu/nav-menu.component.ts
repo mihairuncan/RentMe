@@ -67,4 +67,9 @@ export class NavMenuComponent implements OnInit {
     this.collapse();
     this.router.navigate(['register']);
   }
+
+  openChangePassword() {
+    this.collapse();
+    this.router.navigate(['change-password']);
+  }
 }

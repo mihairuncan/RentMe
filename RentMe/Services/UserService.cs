@@ -16,6 +16,9 @@ namespace RentMe.Services
         public Task<User> GetUser(string userId);
         public Task<PagedList<User>> GetUsersWithRoles(UserParams userParams);
         public Task<IEnumerable<string>> EditRoles(string userName, RolesForEdit rolesForEdit);
+        public Task<User> GetUserByUsernameAndEmail(string username, string email);
+        public Task<bool> SaveAll();
+        public Task<bool> ChangePassword(User user, string password);
     }
 
     public class UserService : IUserService
@@ -27,6 +30,12 @@ namespace RentMe.Services
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        public async Task<User> GetUserByUsernameAndEmail(string username, string email)
+        {
+            return await _context.Users
+                                .FirstOrDefaultAsync(u => u.UserName == username && u.Email == email);
         }
 
         public async Task<User> GetUser(string userId)
@@ -78,6 +87,19 @@ namespace RentMe.Services
             }
 
             return await _userManager.GetRolesAsync(user);
+        }
+
+        public async Task<bool> SaveAll()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> ChangePassword(User user, string password)
+        {
+            await _userManager.RemovePasswordAsync(user);
+            await _userManager.AddPasswordAsync(user, password);
+
+            return true;
         }
     }
 }

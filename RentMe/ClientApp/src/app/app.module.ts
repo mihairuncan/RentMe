@@ -14,7 +14,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxGalleryModule } from 'ngx-gallery';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 
 import { AppComponent } from './app.component';
@@ -53,6 +53,8 @@ import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver'
 import { MessageService } from './_services/message.service';
 import { UserMessagesComponent } from './messages/user-messages/user-messages.component';
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -80,7 +82,9 @@ export function tokenGetter() {
       TimeAgoPipe,
       MyAnnouncementListComponent,
       UserMessagesComponent,
-      MessagesListComponent
+      MessagesListComponent,
+      ForgotPasswordComponent,
+      ChangePasswordComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

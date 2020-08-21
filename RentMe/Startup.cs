@@ -19,6 +19,7 @@ using RentMe.Models;
 using RentMe.Services;
 using System;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 
 namespace RentMe
@@ -98,6 +99,21 @@ namespace RentMe
             });
 
             services.AddSignalR();
+
+            services.AddScoped<SmtpClient>((serviceProvider) =>
+            {
+                var config = serviceProvider.GetRequiredService<IConfiguration>();
+                return new SmtpClient()
+                {
+                    Host = config.GetValue<String>("Smtp:Host"),
+                    Port = config.GetValue<int>("Smtp:Port"),
+                    Credentials = new NetworkCredential(
+                            config.GetValue<String>("Smtp:Username"),
+                            config.GetValue<String>("Smtp:Password")
+                        ),
+                    EnableSsl = true
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -24,7 +24,7 @@
           </li>
 
           <li class="mr-2 ">
-            <div *ngIf="loggedIn()" style="cursor: pointer; border-left: 1px solid white;"
+            <div *ngIf="loggedIn()"
               class="dropdown mt-md-2 py-1 px-2 text-white" dropdown>
               <a class="dropdown-toggle dropdown-item p-0" dropdownToggle>
                 <i class="fa fa-user-circle-o"></i>
@@ -32,16 +32,15 @@
               </a>
               <div class="dropdown-menu mt-2" *dropdownMenu>
 
-                <!-- <a class="dropdown-item" [routerLink]="['/member/edit']">
-                  <i class="fa fa-user"></i> Edit Profile</a>
-                <div class="dropdown-divider"></div> -->
+                <a class="dropdown-item" (click)="openChangePassword()">
+                  <i class="fa fa-unlock-alt"></i> Change Password</a>
+                <div class="dropdown-divider"></div>
 
-                <a *appHasRole="['Admin','Moderator']" class="dropdown-item" (click)="openAdminPanel()"
-                  style="cursor: pointer;">
+                <a *appHasRole="['Admin','Moderator']" class="dropdown-item" (click)="openAdminPanel()">
                   <i class="fa fa-id-card"></i> Admin Panel</a>
                 <div *appHasRole="['Admin','Moderator']" class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#" (click)="logout()">
+                <a class="dropdown-item" (click)="logout()">
                   <i class="fa fa-sign-out"></i> Logout</a>
               </div>
             </div>

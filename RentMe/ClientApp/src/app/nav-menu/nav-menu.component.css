@@ -22,6 +22,11 @@ html {
   outline: none;
 }
 
+.dropdown.mt-md-2.px-2 {
+  cursor: pointer;
+  border-left: 1px solid white;
+}
+
 .dropdown.mt-md-2.px-2:hover {
   background-color: white;
   border-radius: 5px;
@@ -40,4 +45,8 @@ html {
 
 a.dropdown-toggle.dropdown-item:hover {
   background: none;
+}
+
+.dropdown-divider+.dropdown-item:hover {
+  color: #fff !important;
 }

@@ -49,6 +49,14 @@ export class AuthenticationService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  resetPassword(userForPasswordRecorer: any) {
+    return this.http.post(this.baseUrl + 'api/auth/forgotPassword', userForPasswordRecorer);
+  }
+
+  changePassword(passwordText: string) {
+    return this.http.post(this.baseUrl + 'api/auth/changePassword', { passwordText });
+  }
+
   roleMatch(allowedRoles): boolean {
     let isMatch = false;
     const userRoles = this.decodedToken.role as Array<string>;

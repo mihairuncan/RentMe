@@ -16,11 +16,14 @@ import { AnnouncementResolver } from './_resolvers/announcement-details.resolver
 import { MyAnnouncementListComponent } from './announcements/my-announcement-list/my-announcement-list.component';
 import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver';
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'forgot-password', component: ForgotPasswordComponent },
     {
         path: 'announcements/:subcategoryName', component: AnnouncementListComponent,
         resolve: { announcements: AnnouncementsResolver }
@@ -55,6 +58,9 @@ export const routes: Routes = [
             },
             {
                 path: 'myMessages', component: MessagesListComponent
+            },
+            {
+                path: 'change-password', component: ChangePasswordComponent
             }
         ]
     },

@@ -26,9 +26,6 @@ export class MessagesListComponent implements OnInit {
     this.messageService.recipientUserId.subscribe(recipientId => {
       this.recipientId = recipientId;
     });
-
-    console.log(this.selectedUsername);
-    console.log(this.recipientId);
   }
 
   loadMessagesList() {
