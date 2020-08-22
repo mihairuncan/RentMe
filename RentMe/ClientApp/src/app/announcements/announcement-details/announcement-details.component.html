@@ -59,6 +59,6 @@
 </div>
 
 <div class="mb-2 inbox-messsage rounded shadow p-2"
-  *ngIf="this.authService.loggedIn() && announcement.postedById !== loggedInUserId">
+  *ngIf="loggedInUserId && announcement.postedById !== loggedInUserId">
   <app-user-messages></app-user-messages>
 </div>

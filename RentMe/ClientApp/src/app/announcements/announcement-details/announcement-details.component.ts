@@ -28,8 +28,11 @@ export class AnnouncementDetailsComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    document.querySelector('.message-history').setAttribute('style', 'height: 275px !important');
-    document.querySelector('.message-history').scroll(0, document.querySelector('.message-history').scrollHeight);
+    const messagesWindow = document.querySelector('.message-history');
+    if (messagesWindow) {
+      messagesWindow.setAttribute('style', 'height: 275px !important');
+      messagesWindow.scroll(0, messagesWindow.scrollHeight);
+    }
   }
 
 

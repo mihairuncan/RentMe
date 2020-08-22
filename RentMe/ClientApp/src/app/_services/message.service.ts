@@ -14,6 +14,7 @@ import { AuthenticationService } from './auth.service';
 })
 export class MessageService {
   baseUrl: string;
+  loggedIn: boolean;
 
   recipientId = new BehaviorSubject<string>('');
   recipientUserId = this.recipientId.asObservable();
@@ -29,8 +30,16 @@ export class MessageService {
     @Inject('BASE_URL') baseUrl: string
   ) {
     this.baseUrl = baseUrl;
-    this.buildConnection();
-    this.startConnection();
+    this.authService.userIsLoggedIn.subscribe(loggedIn => {
+      this.loggedIn = loggedIn;
+      if (this.loggedIn) {
+        this.buildConnection();
+        this.startConnection();
+      }
+      if (!this.loggedIn) {
+        this.destroyConnection();
+      }
+    });
   }
 
   setRecipientId(recipientId: string) {
@@ -84,7 +93,7 @@ export class MessageService {
 
   public buildConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://10.0.0.5:5001/messageHub/?userId=' + this.authService.decodedToken.nameid)
+      .withUrl(this.baseUrl + 'messageHub/?userId=' + this.authService.decodedToken.nameid)
       .build();
   }
 
@@ -92,12 +101,11 @@ export class MessageService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Connection started...');
+        // console.log('Connection started...');
         this.registerSignalEvents();
       })
       .catch(err => {
-        console.log('Error while starting connection: ' + err);
-
+        // console.log('Error while starting connection: ' + err);
         setTimeout(function (): any { this.startConnection(); }, 3000);
       });
   }
@@ -110,7 +118,12 @@ export class MessageService {
     this.hubConnection.on('MessageRead', (readerUserId: string) => {
       this.messageRead.emit(readerUserId);
     });
+  }
 
+  public destroyConnection() {
+    if (this.hubConnection) {
+      this.hubConnection.stop();
+    }
   }
 
 }

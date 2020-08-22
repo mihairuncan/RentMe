@@ -19,7 +19,7 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    @Inject('BASE_URL') baseUrl: string
+    @Inject('BASE_URL') baseUrl: string,
   ) {
     this.baseUrl = baseUrl;
   }
