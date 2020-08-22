@@ -55,6 +55,8 @@ import { UserMessagesComponent } from './messages/user-messages/user-messages.co
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './authentication/change-password/change-password.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -116,7 +118,8 @@ export function tokenGetter() {
       SweetAlert2Module.forRoot(),
       BsDropdownModule.forRoot(),
       AngularMaterialModule,
-      NgxGalleryModule
+      NgxGalleryModule,
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
    ],
    exports: [
       AngularMaterialModule

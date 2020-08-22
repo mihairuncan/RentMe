@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -119,6 +120,10 @@ namespace RentMe
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".webmanifest"] = "application/manifest+json";
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -141,7 +146,19 @@ namespace RentMe
             }
 
             app.UseHttpsRedirection();
-            app.UseSpaStaticFiles();
+
+            //app.UseSpaStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = provider
+            });
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles(new StaticFileOptions
+                {
+                    ContentTypeProvider = provider
+                });
+            }
 
             app.UseRouting();
 
