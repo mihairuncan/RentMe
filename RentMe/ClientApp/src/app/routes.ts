@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { RegisterComponent } from './authentication/register/register.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -16,8 +16,8 @@ import { AnnouncementResolver } from './_resolvers/announcement-details.resolver
 import { MyAnnouncementListComponent } from './announcements/my-announcement-list/my-announcement-list.component';
 import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver';
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './authentication/change-password/change-password.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },

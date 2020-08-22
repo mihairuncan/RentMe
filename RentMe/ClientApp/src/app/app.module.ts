@@ -19,8 +19,8 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { RegisterComponent } from './authentication/register/register.component';
 import { routes } from './routes';
 import { AuthenticationService } from './_services/auth.service';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
@@ -53,8 +53,8 @@ import { MyAnnouncementsResolver } from './_resolvers/my-announcements.resolver'
 import { MessageService } from './_services/message.service';
 import { UserMessagesComponent } from './messages/user-messages/user-messages.component';
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './authentication/change-password/change-password.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');

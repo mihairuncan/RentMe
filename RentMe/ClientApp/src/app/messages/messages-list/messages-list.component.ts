@@ -32,7 +32,7 @@ export class MessagesListComponent implements OnInit {
     this.messageService.getMessagesList(this.authService.decodedToken.nameid).subscribe(messages => {
       this.messagesList = messages;
 
-      if (!this.recipientId) {
+      if (!this.recipientId && messages.length > 0) {
         this.selectedUsername = this.messagesList[0].userName;
         this.messageService.setRecipientId(this.messagesList[0].userId);
       }

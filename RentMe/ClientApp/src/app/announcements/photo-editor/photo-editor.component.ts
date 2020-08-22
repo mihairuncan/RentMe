@@ -36,17 +36,11 @@ export class PhotoEditorComponent implements OnInit {
       if (result.postedById !== this.authService.decodedToken.nameid) {
         this.router.navigate(['/']);
       }
-      // console.log(result);
       this.photos = result.photos;
     }, error => {
       this.notificationService.error(error);
     });
     this.initializeUploader();
-    // this.announcementService.getPhotos(this.announcementId).subscribe(result => {
-    //   this.photos = result;
-    // }, error => {
-    //   this.notificationService.error(error);
-    // });
   }
 
   fileOverBase(e: any): void {
