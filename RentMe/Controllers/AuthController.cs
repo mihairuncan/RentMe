@@ -124,7 +124,6 @@ namespace RentMe.Controllers
             userToCreate.LastActive = DateTime.Now;
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegister.Password);
-            await _userManager.AddToRoleAsync(userToCreate, "Regular");
 
             var userToReturn = _mapper.Map<UserProfileDetails>(userToCreate);
 

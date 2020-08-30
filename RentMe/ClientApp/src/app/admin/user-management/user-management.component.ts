@@ -74,9 +74,9 @@ export class UserManagementComponent implements OnInit {
     const userRoles = user.roles;
     const availableRoles: any[] = [
       { name: 'Admin', value: 'Admin' },
-      { name: 'Moderator', value: 'Moderator' },
-      { name: 'Regular', value: 'Regular' },
-      { name: 'VIP', value: 'VIP' },
+      { name: 'Moderator', value: 'Moderator' }
+      // { name: 'Regular', value: 'Regular' },
+      // { name: 'VIP', value: 'VIP' },
     ];
 
     for (let i = 0; i < availableRoles.length; i++) {

@@ -14,10 +14,8 @@ namespace RentMe.Data
             {
                 var roles = new List<Role>
                 {
-                    new Role{ Name="Regular" },
                     new Role{ Name="Moderator" },
-                    new Role{ Name="Admin" },
-                    new Role{ Name="VIP" },
+                    new Role{ Name="Admin" }
                 };
 
                 foreach (var role in roles)
@@ -43,7 +41,6 @@ namespace RentMe.Data
                 };
                 userManager.CreateAsync(user, "password").Wait();
                 userManager.AddToRoleAsync(user, "Admin").Wait();
-                userManager.AddToRoleAsync(user, "Regular").Wait();
             }
 
             if (!context.Categories.Any())

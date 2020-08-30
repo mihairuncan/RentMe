@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotifyService } from 'src/app/_services/notify.service';
 import { AdminService } from 'src/app/_services/admin.service';
 import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
-import { AuthenticationService } from 'src/app/_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { Announcement } from 'src/app/_models/announcement';
 import { AnnouncementForList } from 'src/app/_models/announcementForList';
 
 @Component({

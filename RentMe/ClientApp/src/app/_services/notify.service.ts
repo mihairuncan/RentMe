@@ -12,7 +12,7 @@ export class NotifyService {
 
   success(title: string, message?: string) {
     this.notificationService.success(title, message, {
-      timeOut: 2000,
+      timeOut: 1000,
       showProgressBar: false,
       pauseOnHover: true,
       clickToClose: true,
@@ -22,7 +22,7 @@ export class NotifyService {
 
   error(title: string, message?: string) {
     this.notificationService.error(title, message, {
-      timeOut: 2000,
+      timeOut: 1000,
       showProgressBar: false,
       pauseOnHover: true,
       clickToClose: true,
@@ -32,7 +32,7 @@ export class NotifyService {
 
   alert(title: string, message?: string) {
     this.notificationService.alert(title, message, {
-      timeOut: 2000,
+      timeOut: 1000,
       showProgressBar: false,
       pauseOnHover: true,
       clickToClose: true,
@@ -42,7 +42,7 @@ export class NotifyService {
 
   warn(title: string, message?: string) {
     this.notificationService.warn(title, message, {
-      timeOut: 2000,
+      timeOut: 1000,
       showProgressBar: false,
       pauseOnHover: true,
       clickToClose: true,
@@ -52,12 +52,11 @@ export class NotifyService {
 
   info(title: string, message?: string) {
     this.notificationService.info(title, message, {
-      timeOut: 2000,
+      timeOut: 1000,
       showProgressBar: false,
       pauseOnHover: true,
       clickToClose: true,
       animate: 'scale'
     });
   }
-
 }

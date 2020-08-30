@@ -58,7 +58,15 @@ export class PhotoEditorComponent implements OnInit {
       maxFileSize: 10 * 1024 * 1024
     });
 
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+      // Swal.fire(
+      //   'Saved!',
+      //   'Your announcement is waiting for approval.',
+      //   'success'
+      // );
+    };
+
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
@@ -72,6 +80,11 @@ export class PhotoEditorComponent implements OnInit {
         };
         this.photos.push(photo);
       }
+      Swal.fire(
+        'Saved!',
+        'Your announcement is waiting for approval.',
+        'success'
+      );
     };
   }
 
@@ -86,11 +99,6 @@ export class PhotoEditorComponent implements OnInit {
 
   uploadPhotos() {
     this.uploader.uploadAll();
-    Swal.fire(
-      'Saved!',
-      'Your announcement is waiting for approval.',
-      'success'
-    );
   }
 
   deletePhoto(photoId: string) {

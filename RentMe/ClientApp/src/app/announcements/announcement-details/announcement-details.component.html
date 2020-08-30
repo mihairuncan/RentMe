@@ -8,15 +8,12 @@
     </p>
 
     <div>
-      <div class="d-flex justify-content-between">
-        <h5 class="d-inline mr-2"> <span class="badge badge-pill badge-success">
+      <div class="d-sm-flex justify-content-between">
+        <h5 class="d-sm-inline mr-2"> <span class="badge badge-pill badge-success">
             {{announcement.rentPrice | number:'1.2-2'}}€ / {{announcement.rentPeriod}}</span></h5>
-        <h5 class="d-inline mr-2"><span class="badge badge-pill badge-info">{{announcement.city }}</span></h5>
-        <h5 class="d-inline mr-2"><span class="badge badge-pill badge-secondary">{{announcement.phoneNumber}}</span>
-        </h5>
-        <h5 *ngIf="!announcement.isApproved" class="d-inline"><span class="badge badge-pill badge-danger">Waiting for
-            approval</span></h5>
-
+        <h5 class="d-sm-inline mr-2"><span class="badge badge-pill badge-info">{{announcement.city }}</span></h5>
+        <h5 class="d-sm-inline mr-2"><span class="badge badge-pill badge-secondary">{{announcement.phoneNumber}}</span></h5>
+        <h5 *ngIf="!announcement.isApproved" class="d-sm-inline"><span class="badge badge-pill badge-danger">Waiting for approval</span></h5>
       </div>
       <br>
       <div class="row">
@@ -40,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="announcement.postedById === loggedInUserId">
+    <div *ngIf="announcement.postedById === loggedInUserId && announcement.isApproved">
       <a [routerLink]="['/edit-announcement/' + announcement.id]">Edit Announcement</a>
     </div>
   </div>

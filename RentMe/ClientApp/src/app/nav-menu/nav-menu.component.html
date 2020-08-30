@@ -10,14 +10,14 @@
         <ul class="navbar-nav flex-grow">
           <li *ngIf="loggedIn()" class="nav-item mr-2" routerLinkActive="active">
             <div class="py-1">
-              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link px-2 text-white"
+              <a class="nav-link px-2 text-white"
                 (click)="openMyMessages()" style="cursor: pointer;">
                 <i class="fa fa-comments"></i> My Messages</a>
             </div>
           </li>
           <li *ngIf="loggedIn()" class="nav-item mr-2" routerLinkActive="active">
             <div class="py-1">
-              <a *appHasRole="['Admin','Moderator','Regular']" class="nav-link px-2 text-white"
+              <a class="nav-link px-2 text-white"
                 (click)="openMyAnnouncements()" style="cursor: pointer;">
                 <i class="fa fa-bullhorn"></i> My Announcements</a>
             </div>
